@@ -1,0 +1,6 @@
+{
+  "moodle-local_mathslate-snippeteditor": {
+      "requires": [ "json" ] 
+  }
+}
+

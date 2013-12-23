@@ -1,0 +1,5 @@
+{
+  "moodle-local_mathslate-mathjaxeditor" : {
+      "requires" : ["moodle-local_mathslate-snippeteditor", "dd-proxy", "dd-drop" ]
+  }
+}

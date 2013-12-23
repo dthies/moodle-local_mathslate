@@ -1,0 +1,8 @@
+{
+  "name" : "moodle-local_mathslate-mathjaxeditor" ,
+  "builds" : {
+      "moodle-local_mathslate-mathjaxeditor": { 
+          "jsfiles" : [ "mathjaxeditor.js" ]
+       }
+  }
+}
