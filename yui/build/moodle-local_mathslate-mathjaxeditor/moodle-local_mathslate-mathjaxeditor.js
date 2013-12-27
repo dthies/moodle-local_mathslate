@@ -61,7 +61,7 @@ M.local_mathslate.MathJaxEditor=function(id){
         }
         this.render = render;
         this.addMath=function(target,json){
-            math.push(se.createItem(json));
+            se.append(se.createItem(json));
             render();
         };
         this.clear = function(){
@@ -81,6 +81,10 @@ M.local_mathslate.MathJaxEditor=function(id){
         };
         this.getHTML = function(){
             return canvas.get('node').one('span').getHTML();
+        };
+        this.undo = function(){
+            se.undo();
+            render();
         };
         render();
 };

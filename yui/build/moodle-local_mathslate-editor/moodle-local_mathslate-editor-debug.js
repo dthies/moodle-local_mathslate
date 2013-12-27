@@ -17,6 +17,8 @@ M.local_mathslate.Editor=function(editorID,config){
     this.insertMath = null;
     var me=this;
     function insertMath (m) {if(me.insertMath){me.insertMath(m);}}
+    var undo=this.node.appendChild(Y.Node.create('<button>Undo</button>'));
+    undo.on('click',function(){mje.undo();});
     var clear=this.node.appendChild(Y.Node.create('<button>Clear</button>'));
     clear.on('click',function(){mje.clear();});
     var inlineTex=this.node.appendChild(Y.Node.create('<button>Inline TeX</button>'));

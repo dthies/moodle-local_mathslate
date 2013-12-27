@@ -1,7 +1,41 @@
 M.local_mathslate = M.local_mathslate|| {};
 M.local_mathslate.mSlots= function(){
-        var slots=[];
-        this.slots=slots;
+    var stack=[];
+    var stackPointer=0;
+    var slots=[];
+    this.slots=slots;
+    function saveState () {
+        stack.splice(stackPointer);
+        var cs = slots.slice(0);
+        var ci =[];
+        cs.forEach(function(s){
+            ci.push(s.slice(0));
+        });
+        stack[stackPointer]=[cs,ci];
+    }
+    function restoreState() {
+        slots.splice(0);
+        if(slots[0]){slots.pop();}
+if(!stack[stackPointer]){alert('error');}
+        var cs = stack[stackPointer][0];
+        var ci = stack[stackPointer][1];
+        cs.forEach(function(s,i) {
+            s.splice(0);
+            if(s[0]){s.pop();}
+            ci[i].forEach(function(item){
+                s.push(item);
+            });
+            slots.push(s);
+        });
+    }
+    this.undo=function() {
+        if(stackPointer===0){return;}
+        stackPointer--;
+        if(stackPointer===0){
+            slots[0].pop();
+            return;}
+        restoreState();
+    };
     this.createItem = function(json) {
         function findBlank(snippet) {
             if (Array.isArray(snippet[2])) {
@@ -25,7 +59,7 @@ M.local_mathslate.mSlots= function(){
         newMath[1].id=newID;
             findBlank(newMath);
         return newMath;
-    },
+    };
     this.getItemByID = function(id){
         var str;
         this.slots.forEach(function(slot){
@@ -66,6 +100,14 @@ M.local_mathslate.mSlots= function(){
                 }
             });
         });
+        stackPointer++;
+        saveState();
+        return ;
+    },
+    this.append = function(element){
+        slots[0].push(element);
+        stackPointer++;
+        saveState();
         return ;
     },
     this.forEach = function(f){
