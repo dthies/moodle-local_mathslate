@@ -80,6 +80,10 @@ M.local_mathslate.MathJaxEditor=function(id){
         this.getHTML = function(){
             return canvas.get('node').one('span').getHTML();
         };
+        this.redo = function(){
+            se.redo();
+            render();
+        };
         this.undo = function(){
             se.undo();
             render();

@@ -28,6 +28,11 @@ if(!stack[stackPointer]){alert('error');}
             slots.push(s);
         });
     }
+    this.redo=function() {
+        if(!stack[stackPointer+1]){return;}
+        stackPointer++;
+        restoreState();
+    };
     this.undo=function() {
         if(stackPointer===0){return;}
         stackPointer--;
