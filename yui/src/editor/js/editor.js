@@ -1,10 +1,31 @@
-/*
- * Mathslate Editor Copyright Daniel Thies 2013
- * dthies@ccal.edu
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Atto text editor mathslate plugin.
+ *
+ * @package    local_mathslate
+ * @copyright  2013 Daniel Thies  <dthies@ccal.edu>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 M.local_mathslate = M.local_mathslate|| {};
+/* Constructor function for an editor of a page.
+ * @method Editor
+ * @param string editorID
+ * @param string config
+ */
 M.local_mathslate.Editor=function(editorID,config){
+/* Callback function to insert math into text after button is clicked.
+ * params string Markup to be inserted.
+ */
+    this.insertMath = null;
     var toolboxID=Y.guid();
     var workID=Y.guid();
     this.node=Y.one(editorID);
@@ -12,7 +33,6 @@ M.local_mathslate.Editor=function(editorID,config){
     this.node.appendChild(Y.Node.create('<div id="' +workID +'" class="mathslate-workspace">'));
 
     var mje=new M.local_mathslate.MathJaxEditor('#'+workID);
-    this.insertMath = null;
     var me=this;
     function insertMath (m) {if(me.insertMath){me.insertMath(m);}}
     var undo=this.node.appendChild(Y.Node.create('<button>Undo</button>'));
@@ -86,7 +106,9 @@ M.local_mathslate.Editor=function(editorID,config){
             mje.addMath(e.drop.get('node').get('id'),e.drag.get('data'));
         }
     });
-       
+ /* function passed to MathJax to initiate dragging after math is formated
+  * @function makeToolsDraggable
+  */
     function makeToolsDraggable(){
         tbox.tools.forEach(function(tool) {
         var d=new Y.DD.Drag({node: '#'+tool.id});
