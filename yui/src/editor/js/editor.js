@@ -37,6 +37,7 @@ M.local_mathslate.Editor=function(editorID,config){
 
     var mje=new M.local_mathslate.MathJaxEditor('#'+workID);
     var me=this;
+    me.output = function(f){return mje.output(f);};
     function insertMath (m) {if(me.insertMath){me.insertMath(m);}}
     undo.on('click',function(){mje.undo();});
     redo.on('click',function(){mje.redo();});
