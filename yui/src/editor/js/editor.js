@@ -29,17 +29,17 @@ M.local_mathslate.Editor=function(editorID,config){
     var toolboxID=Y.guid();
     var workID=Y.guid();
     this.node=Y.one(editorID);
+    var undo=this.node.appendChild(Y.Node.create('<button>Undo</button>'));
+    var redo=this.node.appendChild(Y.Node.create('<button>Redo</button>'));
+    var clear=this.node.appendChild(Y.Node.create('<button>Clear</button>'));
     this.node.appendChild(Y.Node.create('<div id="' +toolboxID +'">'));
     this.node.appendChild(Y.Node.create('<div id="' +workID +'" class="mathslate-workspace">'));
 
     var mje=new M.local_mathslate.MathJaxEditor('#'+workID);
     var me=this;
     function insertMath (m) {if(me.insertMath){me.insertMath(m);}}
-    var undo=this.node.appendChild(Y.Node.create('<button>Undo</button>'));
     undo.on('click',function(){mje.undo();});
-    var redo=this.node.appendChild(Y.Node.create('<button>Redo</button>'));
     redo.on('click',function(){mje.redo();});
-    var clear=this.node.appendChild(Y.Node.create('<button>Clear</button>'));
     clear.on('click',function(){mje.clear();});
     var inlineTex=this.node.appendChild(Y.Node.create('<button>Inline TeX</button>'));
     inlineTex.on('click',function(){insertMath('\\('+mje.output('tex')+'\\)');});
