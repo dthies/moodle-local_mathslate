@@ -15,7 +15,7 @@ M.local_mathslate.MathJaxEditor=function(id){
                     resizeFrame: false,
                     moveOnEnd: false
                 });
-               // if(!m.class||m.class!=='blank'){
+                if(!m['class']||m['class']!=='blank'){
                     drag.on('drag:start', function(){
                         var id = Y.guid();
                         this.get('dragNode').set('innerHTML','' );
@@ -25,7 +25,7 @@ M.local_mathslate.MathJaxEditor=function(id){
                         MathJax.Hub.Queue(['Typeset',MathJax.Hub,id]);
                     
                     });
-                //}
+                }
 
 
                 var drop = new Y.DD.Drop({node: node});
