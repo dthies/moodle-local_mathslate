@@ -15,15 +15,17 @@ M.local_mathslate.MathJaxEditor=function(id){
                     resizeFrame: false,
                     moveOnEnd: false
                 });
-                drag.on('drag:start', function(){
-                    var id = Y.guid();
-                    this.get('dragNode').set('innerHTML','' );
-                    MathJax.Hub.Queue(['addElement',MathJax.HTML,
-                        this.get('dragNode').getDOMNode(),'span',{id: id},
-                        [['math',{},[Y.JSON.parse(se.getItemByID(m[1].id))]]]]);
-                    MathJax.Hub.Queue(['Typeset',MathJax.Hub,id]);
+               // if(!m.class||m.class!=='blank'){
+                    drag.on('drag:start', function(){
+                        var id = Y.guid();
+                        this.get('dragNode').set('innerHTML','' );
+                        MathJax.Hub.Queue(['addElement',MathJax.HTML,
+                            this.get('dragNode').getDOMNode(),'span',{id: id},
+                            [['math',{},[Y.JSON.parse(se.getItemByID(m[1].id))]]]]);
+                        MathJax.Hub.Queue(['Typeset',MathJax.Hub,id]);
                     
-                });
+                    });
+                //}
 
 
                 var drop = new Y.DD.Drop({node: node});
