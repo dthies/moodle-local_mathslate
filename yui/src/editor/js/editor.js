@@ -38,18 +38,9 @@ M.local_mathslate.Editor=function(editorID,config){
     var mje=new M.local_mathslate.MathJaxEditor('#'+workID);
     var me=this;
     me.output = function(f){return mje.output(f);};
-    function insertMath (m) {if(me.insertMath){me.insertMath(m);}}
     undo.on('click',function(){mje.undo();});
     redo.on('click',function(){mje.redo();});
     clear.on('click',function(){mje.clear();});
-    var inlineTex=this.node.appendChild(Y.Node.create('<button>Inline TeX</button>'));
-    inlineTex.on('click',function(){insertMath('\\('+mje.output('tex')+'\\)');});
-    var displayTex=this.node.appendChild(Y.Node.create('<button>Display TeX</button>'));
-    displayTex.on('click',function(){insertMath('\\['+mje.output('tex')+'\\]');});
-    var html=this.node.appendChild(Y.Node.create('<button>Insert HTML</button>'));
-    html.on('click',function(){insertMath(mje.output('HTML'));});
-    var mathmml=this.node.appendChild(Y.Node.create('<button>Insert MathML</button>'));
-    mathmml.on('click',function(){insertMath(mje.output('MathML'));});
 
     var tbox={tools: [],
         fillToolBox: function(tools){
