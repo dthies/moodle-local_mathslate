@@ -13,11 +13,11 @@ M.local_mathslate.MathJaxEditor=function(id){
             se.forEach(function(m){
                 var node=canvas.get('node').one('#'+m[1].id);
                 if(!node){return;}
-                var drag = new Y.DD.Drag({node: node}).plug(Y.Plugin.DDProxy, {
-                    resizeFrame: false,
-                    moveOnEnd: false
-                });
-                if(!m['class']||m['class']!=='blank'){
+                if(!m[1]||!m[1]['class']||m[1]['class']!=='blank'){
+                    var drag = new Y.DD.Drag({node: node}).plug(Y.Plugin.DDProxy, {
+                        resizeFrame: false,
+                        moveOnEnd: false
+                    });
                     drag.on('drag:start', function(){
                         var id = Y.guid();
                         this.get('dragNode').set('innerHTML','' );
