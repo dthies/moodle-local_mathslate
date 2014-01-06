@@ -1,0 +1,51 @@
+<head>
+<title>Editing JSON configuration file</title>
+<script type="text/javascript"
+   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured">
+</script>
+<script>
+MathJax.Hub.Config({TeX: {extensions: ["mhchem.js"]} });
+MathJax.Hub.Configured();
+</script>
+<script src="http://yui.yahooapis.com/3.14.1/build/yui/yui-min.js"></script>
+</head>
+<body>
+<p>The mathslate equation maker is configured with a JSON file which is by default local/mathslate/config.json. The format of the file is an array of objects with each element configuring one tab of the editor.  Each tab object consists of a label with is and HTML snippet, and array of draggable elements also represented by HTML snippets. The format of thesnippet is defined at MathJax.org.  However a script on this page can translate TeX expression for to add to the default values in json.config.  Simply enter TeX in the box and return.  The snippet should then be displayed so that it may be copied and pasted with a text editor. In order to check that MathJax is able to render both the TeX and the snippet, the formatted expression should appear above and below the box.
+<div id="MathDiv">\( \)</div>
+Enter an expression in TeX 
+<input type="text" id="input-tex">
+<p>Snippet: <div id='display-snippet'></div>
+<div id="rendered-snippet"></div>
+<script>
+YUI().use('node', 'escape', 'json', function(Y){
+var input=Y.one('#input-tex');
+    input.on ('change',function(){
+var math = MathJax.Hub.getAllJax("MathDiv")[0];
+MathJax.Hub.Queue(["Text",math, input.getDOMNode().value ]);
+
+var mml=Y.one('#MathDiv').getHTML().replace(/.*<math xmlns=\"http:\/\/www.w3.org\/1998\/Math\/MathML\">/,'[').replace(/<\/math.*/,']');
+var snippet = mml.replace('<mrow>', '["mrow",{"tex": "'+input.getDOMNode().value +'"},[');
+snippet = snippet.replace(/ class="[^"]*"/g,'');
+['mrow','mfrac','msup','msubsup','msqrt'].forEach(function(tag){
+snippet = snippet.replace(new RegExp('<'+tag+'>','g'),'["'+tag+'",{},[').replace(new RegExp('</'+tag+'>',"g"),"]],");
+});
+snippet=snippet.replace(/<mo stretchy="false">/g,'["mo",{"stretchy": "false"},"');
+
+['mo','mi','mn','mtext'].forEach(function(tag){
+snippet = snippet.replace(new RegExp('<'+tag+'>','g'),'["'+tag+'",{},"').replace(new RegExp('</'+tag+'>',"g"),'"],');
+});
+snippet=snippet.replace(/<mi mathvariant="italic">/g,'["mi",{"mathvariant": "italic"},"');
+snippet=snippet.replace(/,]/g,']').replace(/,$/,'');
+snippet=snippet.replace(/\\/g,'\\\\');
+
+Y.one('#display-snippet').setHTML(Y.Escape.html(snippet));
+
+snippet=Y.JSON.parse(snippet);
+Y.one('#rendered-snippet').setHTML('');
+MathJax.HTML.addElement(Y.one('#rendered-snippet').getDOMNode(), 'span',{},[['math',{},snippet]]);
+MathJax.Hub.Queue(['Typeset',MathJax.Hub,'rendered-snippet']);
+    });
+});
+</script>
+</body>
+
