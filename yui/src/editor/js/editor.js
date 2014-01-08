@@ -33,7 +33,7 @@ M.local_mathslate.Editor=function(editorID,config){
     var redo=this.node.appendChild(Y.Node.create('<button>Redo</button>'));
     var clear=this.node.appendChild(Y.Node.create('<button>Clear</button>'));
     this.node.appendChild(Y.Node.create('<div id="' +toolboxID +'">'));
-    this.node.appendChild(Y.Node.create('<div id="' +workID +'" class="mathslate-workspace">'));
+    this.node.appendChild(Y.Node.create('<div id="' +workID +'" >'));
 
     var mje=new M.local_mathslate.MathJaxEditor('#'+workID);
     var me=this;

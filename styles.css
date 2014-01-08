@@ -2,6 +2,11 @@
     color: green;
 }
 
+.mathslate-preview {
+    width: 373px;
+    height: 30px;
+    border: solid 1px;
+}
 .mathslate-workspace {
     background-color: #CDF; 
     height: 150px;

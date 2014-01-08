@@ -4,10 +4,13 @@ M.local_mathslate.MathJaxEditor=function(id){
         var se=new M.local_mathslate.mSlots();
         se.slots.push(math);
         this.workspace=Y.one(id).append('<div id="canvas" class="mathslate-workspace"/>');
+        var preview = Y.one(id).appendChild(Y.Node.create('<div class="mathslate-preview">'));
+
         var canvas=new Y.DD.Drop({
             node: this.workspace.one('#canvas')});
         this.canvas=canvas;
         function makeDraggable () {
+            preview.setHTML(se.output('tex'));
             se.forEach(function(m){
                 var node=canvas.get('node').one('#'+m[1].id);
                 if(!node){return;}
