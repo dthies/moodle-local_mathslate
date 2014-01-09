@@ -2,6 +2,10 @@
     color: green;
 }
 
+.mathslate-selected {
+    background-color: blue;
+}
+
 .mathslate-preview {
     width: 373px;
     height: 30px;
