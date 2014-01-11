@@ -14,6 +14,13 @@ M.local_mathslate.MathJaxEditor=function(id){
             se.forEach(function(m){
                 var node=canvas.get('node').one('#'+m[1].id);
                 if(!node){return;}
+                node.on('click',function(e){
+                    e.stopPropagation();
+                    var selectedNode = canvas.get('node').one('.mathslate-selected');
+                    if(!selectedNode||node.one('#'+selectedNode.getAttribute('id'))){return;}
+                    se.insertSnippet(selectedNode.getAttribute('id'), se.removeSnippet(node.getAttribute('id')));
+                    render();
+                });
                 node.on('dblclick',function(e){
                     e.stopPropagation();
                     canvas.get('node').all('.mathslate-selected').each(function(n){
