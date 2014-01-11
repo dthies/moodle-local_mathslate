@@ -79,8 +79,12 @@ M.local_mathslate.MathJaxEditor=function(id){
             MathJax.Hub.Queue(makeDraggable);
         }
         this.render = render;
-        this.addMath=function(target,json){
-            se.append(se.createItem(json));
+        this.addMath=function(json){
+            if(Y.one('.mathslate-selected')){
+                se.insertSnippet(Y.one('.mathslate-selected').getAttribute('id'),se.createItem(json));
+            } else {
+                se.append(se.createItem(json));
+            }
             render();
         };
         this.clear = function(){

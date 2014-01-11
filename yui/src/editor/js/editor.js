@@ -95,7 +95,7 @@ M.local_mathslate.Editor=function(editorID,config){
 
     mje.canvas.on('drop:hit',function(e){
         if(e.drag.get('data')) {
-            mje.addMath(e.drop.get('node').get('id'),e.drag.get('data'));
+            mje.addMath(e.drag.get('data'));
         }
     });
  /* function passed to MathJax to initiate dragging after math is formated
@@ -103,6 +103,9 @@ M.local_mathslate.Editor=function(editorID,config){
   */
     function makeToolsDraggable(){
         tbox.tools.forEach(function(tool) {
+        Y.one('#'+tool.id).on('click',function(){
+            mje.addMath(tool.json);
+        });
         var d=new Y.DD.Drag({node: '#'+tool.id});
         d.set('data',tool.json);
         d.on('drag:end', function() {
