@@ -9,6 +9,10 @@ M.local_mathslate.MathJaxEditor=function(id){
         var canvas=new Y.DD.Drop({
             node: this.workspace.one('#canvas')});
         this.canvas=canvas;
+        this.workspace.on('click',function(){
+            se.select();
+            render();
+        });
         function makeDraggable () {
             preview.setHTML(se.output('tex'));
             se.forEach(function(m){
@@ -19,10 +23,12 @@ M.local_mathslate.MathJaxEditor=function(id){
                     var selectedNode = canvas.get('node').one('.mathslate-selected');
                     if(!selectedNode){
                         node.addClass('mathslate-selected');
+                        se.select(node.getAttribute('id'));
                         return;
                     }
                     if(selectedNode===node){
                         node.removeClass('mathslate-selected');
+                        se.select();
                         return;
                     }
                     if(node.one('#'+selectedNode.getAttribute('id'))){return;}
@@ -40,6 +46,10 @@ M.local_mathslate.MathJaxEditor=function(id){
                         moveOnEnd: false
                     });
                     drag.on('drag:start', function(){
+                        if(canvas.get('node').one('.mathslate-selected')){
+                            se.select();
+                            canvas.get('node').one('.mathslate-selected').removeClass('mathslate-selected');
+                        }
                         var id = Y.guid();
                         this.get('dragNode').set('innerHTML','' );
                         MathJax.Hub.Queue(['addElement',MathJax.HTML,
@@ -74,6 +84,9 @@ M.local_mathslate.MathJaxEditor=function(id){
                 });
                 
             });
+            if(se.getSelected()&&canvas.get('node').one('#'+se.getSelected())) {
+                canvas.get('node').one('#'+se.getSelected()).addClass('mathslate-selected');
+            }
         }
         function render() {
             se.rekey();

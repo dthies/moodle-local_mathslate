@@ -2,6 +2,7 @@ YUI.add('moodle-local_mathslate-snippeteditor', function (Y, NAME) {
 
 M.local_mathslate = M.local_mathslate|| {};
 M.local_mathslate.mSlots= function(){
+    var selected;
     var stack=[];
     var stackPointer=0;
     var slots=[];
@@ -173,6 +174,17 @@ if(!stack[stackPointer]){alert('error');}
                str=str+generateMarkup(s);
                });
             return str;
+    };
+    this.select = function(id){
+        selected=null;
+        this.slots.forEach(function(slot){
+            slot.forEach(function (m){
+                if(m[1].id===id) {selected = m;}
+            });
+        });
+    };
+    this.getSelected = function() {
+        return selected && selected[1].id;
     };
 };
 
