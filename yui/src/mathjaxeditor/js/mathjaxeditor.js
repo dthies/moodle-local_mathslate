@@ -21,7 +21,6 @@ M.local_mathslate.MathJaxEditor=function(id){
                         node.addClass('mathslate-selected');
                         return;
                     }
-                    //if(selectedNode.getAttribute('id')===node.getAttribute('id')){
                     if(selectedNode===node){
                         node.removeClass('mathslate-selected');
                         return;
@@ -93,9 +92,13 @@ M.local_mathslate.MathJaxEditor=function(id){
             render();
         };
         this.clear = function(){
-            math=[];
-            se=new M.local_mathslate.mSlots();
-            se.slots.push(math);
+            if(Y.one('.mathslate-selected')){
+                se.removeSnippet(Y.one('.mathslate-selected').getAttribute('id'));
+            } else {
+                math=[];
+                se=new M.local_mathslate.mSlots();
+                se.slots.push(math);
+            }
             render();
         };
         this.output = function(format){
