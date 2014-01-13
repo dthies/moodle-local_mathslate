@@ -12,12 +12,13 @@ MathJax.Hub.Configured();
 <script src="http://yui.yahooapis.com/3.14.1/build/yui/yui-min.js"></script>
 </head>
 <body>
-<p>The mathslate equation maker is configured with a JSON file which is by default local/mathslate/config.json. The format of the file is an array of objects with each element configuring one tab of the editor.  Each tab object consists of a label with is and HTML snippet, and array of draggable elements also represented by HTML snippets. The format of thesnippet is defined at MathJax.org.  However a script on this page can translate TeX expressions for you to add to the default values in json.config.  First set the MathJax rendering mode to MathML (may need Firefox of another browser with native MathMl support), and then simply enter TeX in the box and return.  The snippet should then be displayed so that it may be copied and pasted with a text editor. In order to check that MathJax is able to render both the TeX and the snippet, the formatted expression should appear above and below the box.
-<div id="MathDiv">\( 1/2 \)</div>
-Enter an expression in TeX 
+<p>The mathslate equation maker is configured with a JSON file which is by default local/mathslate/config.json. The format of the file is an array of objects with each element configuring one tab of the editor.  Each tab object consists of a label with is and HTML snippet, and array of draggable elements also represented by HTML snippets. The format of the snippet is defined at MathJax.org.  However a script on this page can translate TeX expressions for you to add to the default values in json.config.  Simply enter TeX in the box and return.  The snippet should then be displayed so that it may be copied and pasted with a text editor. In order to check that MathJax is able to render both the TeX And the snippet, the formatted expression should appear above and below the snippet.
+
+<p>Enter an expression in TeX 
 <input type="text" id="input-tex">
+<p>Rendered TeX:<div id="MathDiv">\(  \)</div>
 <p>Snippet: <div id='display-snippet'></div>
-<div id="rendered-snippet"></div>
+<p>Rendered Snippet:<div id="rendered-snippet"></div>
 <script>
 YUI().use('node', 'escape', 'json', function(Y){
     var input=Y.one('#input-tex');
@@ -31,7 +32,8 @@ YUI().use('node', 'escape', 'json', function(Y){
 
         var snippet;
         function findSnippet() { 
-            var mml=Y.one('#MathDiv').getHTML().replace(/.*<math xmlns=\"http:\/\/www.w3.org\/1998\/Math\/MathML\">/,'[').replace(/<\/math.*/,']');
+            var mml = MathJax.Hub.getAllJax('MathDiv')[0].root.toMathML().replace(/.*<math xmlns=\"http:\/\/www.w3.org\/1998\/Math\/MathML\">/,'[').replace(/<\/math.*/,']');
+            mml='['+mml.slice(4,-2)+']';
             snippet = mml.replace('<mrow>', '["mrow",{"tex": "'+input.getDOMNode().value +'"},[');
             snippet = snippet.replace(/ class="[^"]*"/g,'');
             ['mrow','mfrac','msup','msubsup','msqrt'].forEach(function(tag){
@@ -43,7 +45,9 @@ YUI().use('node', 'escape', 'json', function(Y){
                 snippet = snippet.replace(new RegExp('<'+tag+'>','g'),'["'+tag+'",{},"').replace(new RegExp('</'+tag+'>',"g"),'"],');
             });
             snippet=snippet.replace(/<mi mathvariant="italic">/g,'["mi",{"mathvariant": "italic"},"');
-            snippet=snippet.replace(/,]/g,']').replace(/,$/,'');
+            snippet=snippet.replace(/,\s\]$/g,']');
+            snippet=snippet.replace(',]',']').replace(/,$/,'');
+            snippet=snippet.replace(/, ]/g,']').replace(/, \n$/,'');
             snippet=snippet.replace(/\\/g,'\\\\');
     
             Y.one('#display-snippet').setHTML(Y.Escape.html(snippet));
