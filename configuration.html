@@ -34,7 +34,7 @@ YUI().use('node', 'escape', 'json', function(Y){
             mml='['+mml.slice(4,-2)+']';
             snippet = mml.replace('<mrow>', '["mrow",{"tex": "'+input.getDOMNode().value +'"},[');
             snippet = snippet.replace(/ class="[^"]*"/g,'');
-            ['mrow','mfrac','msup','msubsup','msqrt'].forEach(function(tag){
+            ['mrow','mfrac','msub','msup','msubsup','munder','mover','munderover','msqrt'].forEach(function(tag){
                 snippet = snippet.replace(new RegExp('<'+tag+'>','g'),'["'+tag+'",{},[').replace(new RegExp('</'+tag+'>',"g"),"]],");
             });
             snippet=snippet.replace(/<mo stretchy="false">/g,'["mo",{"stretchy": "false"},"');
