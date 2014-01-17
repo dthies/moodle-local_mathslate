@@ -173,6 +173,46 @@ if(!stack[stackPointer]){alert('error');}
                });
             return str;
     };
+    this.preview = function (format) {
+            function generateMarkup (s) {
+               var str='';
+               if (typeof s === 'string') {
+                   return s;
+               }
+               if(s[1] && s[1].id) {
+                   str=str+'<div id="'+s[1].id+'" style="padding-left: 10px">';
+               }
+               if (s[1]&&s[1][format]){
+                  var i=0;
+                  while (s[1][format][i]) {
+                     str=str+s[1][format][i++];
+                     if (s[2]&&typeof s[1][format][i]==='number') {
+                            str=str+generateMarkup(s[2][s[1][format][i]]);
+                     }
+                     i++;
+                  }
+               }
+               else if (s[2]) {
+                   if(typeof s[2] === 'string') {
+                      str=str+s[2];
+                   }
+                   else {
+                       s[2].forEach(function(t){
+                           str=str+generateMarkup(t);
+                       });
+                   }
+               }
+               if(s[1] && s[1].id) {
+                   str=str+'</div>';
+               }
+               return str;
+            }
+            var str='';
+            slots[0].forEach(function(s) {
+               str=str+generateMarkup(s);
+               });
+            return str;
+    };
     this.select = function(id){
         selected=null;
         this.slots.forEach(function(slot){

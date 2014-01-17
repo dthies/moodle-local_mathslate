@@ -16,7 +16,7 @@ M.local_mathslate.MathJaxEditor=function(id){
             render();
         });
         function makeDraggable () {
-            preview.setHTML(se.output('tex'));
+            preview.setHTML(se.preview('tex'));
             se.forEach(function(m){
                 var node=canvas.get('node').one('#'+m[1].id);
                 if(!node){return;}
@@ -123,6 +123,9 @@ M.local_mathslate.MathJaxEditor=function(id){
             if(format==='HTML') {
                 return canvas.get('node').one('span').getHTML();
             }
+            return se.output(format);
+        };
+        this.preview = function(format){
             return se.output(format);
         };
         this.getHTML = function(){
