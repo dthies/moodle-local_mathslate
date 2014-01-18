@@ -26,10 +26,13 @@ M.local_mathslate.MathJaxEditor=function(id){
                     if(!selectedNode){
                         node.addClass('mathslate-selected');
                         se.select(node.getAttribute('id'));
+                        preview.one('#'+node.getAttribute('id')).addClass('mathslate-selected');
+                        preview.one('#'+node.getAttribute('id')).focus();
                         return;
                     }
                     if(selectedNode===node){
                         node.removeClass('mathslate-selected');
+                        preview.one('#'+node.getAttribute('id')).removeClass('mathslate-selected');
                         se.select();
                         return;
                     }
