@@ -8,8 +8,9 @@
 
 .mathslate-preview {
     width: 373px;
-    height: 30px;
+    height: 130px;
     border: solid 1px;
+    overflow: scroll;
 }
 .mathslate-workspace {
     background-color: #CDF; 
