@@ -91,7 +91,7 @@ M.local_mathslate.MathJaxEditor=function(id){
             });
             if(se.getSelected()&&canvas.get('node').one('#'+se.getSelected())) {
                 canvas.get('node').one('#'+se.getSelected()).addClass('mathslate-selected');
-                preview.one('#'+node.getAttribute('#'+se.getSelected())).addClass('mathslate-selected');
+                preview.one('#'+se.getSelected()).addClass('mathslate-selected');
             }
         }
         function render() {
