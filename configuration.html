@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <head>
 <title>Editing JSON configuration file</title>
 <script type="text/javascript"
@@ -5,7 +7,6 @@
 </script>
 <script>
 MathJax.Hub.Config({
-  jax: ["input/TeX", "input/MathML", "output/NativeMML"],
   TeX: {
       extensions: ["mhchem.js"]}
   });
@@ -39,13 +40,12 @@ YUI().use('node', 'escape', 'json', function(Y){
         var snippet;
         function findSnippet() { 
             Y.one('#display-mathml').setHTML(Y.Escape.html(MathJax.Hub.getAllJax('MathDiv')[0].root.toMathML()));
-            var mml = MathJax.Hub.getAllJax('MathDiv')[0].root.toMathML().replace(/.*<math xmlns=\"http:\/\/www.w3.org\/1998\/Math\/MathML\">/,'[').replace(/<\/math.*/,']');
+            var mml = MathJax.Hub.getAllJax('MathDiv')[0].root.toMathML().replace(/.*<math xmlns=\"http:\/\/www.w3.org\/1998\/Math\/MathML\">\s*/,'[').replace(/\s*<\/math.*/,']');
             if (/<mtext mathcolor="red">/.test(mml)) {
                 snippet=[''];
                 Y.one('#display-snippet').setHTML('Invalid expression');
                 return false;
             }
-            mml='['+mml.slice(4,-2)+']';
             snippet = mml.replace('<mrow>', '["mrow",{"tex": "'+input.getDOMNode().value +'"},[');
             snippet = snippet.replace(/ class="[^"]*"/g,'');
             ['mrow','mfrac','msub','msup','msubsup','munder','mover','munderover','msqrt','mroot'].forEach(function(tag){
@@ -56,13 +56,13 @@ YUI().use('node', 'escape', 'json', function(Y){
             ['mo','mi','mn','mtext'].forEach(function(tag){
                 snippet = snippet.replace(new RegExp('<'+tag+'>','g'),'["'+tag+'",{},"').replace(new RegExp('</'+tag+'>',"g"),'"],');
             });
+
             snippet=snippet.replace(/<mi mathvariant="italic">/g,'["mi",{"mathvariant": "italic"},"');
             snippet=snippet.replace(/,\s*\]/g,']');
-            snippet=snippet.replace(',]',']').replace(/,$/,'');
-            snippet=snippet.replace(/, ]/g,']').replace(/, \n$/,'');
             snippet=snippet.replace(/\\/g,'\\\\');
             snippet=snippet.replace(/<!--.*?-->/g,'');
-            snippet=snippet.replace(/&#x/g,'\\u').replace(/;"/g,'"');
+            snippet=snippet.replace(/&#x([\dA-F]{4});/g,'\\u$1');
+
             snippet='[["mrow", {"tex":["'+input.getDOMNode().value.replace(/\\/g,'\\\\')+'"]},' + snippet + ']]';
     
             Y.one('#display-snippet').setHTML(Y.Escape.html(snippet));
