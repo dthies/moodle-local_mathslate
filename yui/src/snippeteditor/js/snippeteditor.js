@@ -30,17 +30,24 @@ if(!stack[stackPointer]){alert('error');}
         });
     }
     this.redo=function() {
-        if(!stack[stackPointer+1]){return;}
+        if(!stack[stackPointer+1]){
+            return this.next||this;
+        }
         stackPointer++;
         restoreState();
+        return this;
     };
     this.undo=function() {
-        if(stackPointer===0){return;}
+        if(stackPointer===0){
+            return this.previous||this;
+        }
         stackPointer--;
         if(stackPointer===0){
             slots[0].pop();
-            return;}
+            return this;
+            }
         restoreState();
+        return this;
     };
     this.createItem = function(json) {
         function findBlank(snippet) {
@@ -107,12 +114,14 @@ if(!stack[stackPointer]){alert('error');}
             });
         });
         stackPointer++;
+        this.next=null;
         saveState();
         return ;
     },
     this.append = function(element){
         slots[0].push(element);
         stackPointer++;
+        this.next=null;
         saveState();
         return ;
     },

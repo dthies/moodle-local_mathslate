@@ -115,7 +115,9 @@ M.local_mathslate.MathJaxEditor=function(id){
                 se.removeSnippet(Y.one('.mathslate-selected').getAttribute('id'));
             } else {
                 math=[];
-                se=new M.local_mathslate.mSlots();
+                se.next=new M.local_mathslate.mSlots();
+                se.next.previous=se;
+                se=se.next;
                 se.slots.push(math);
             }
             render();
@@ -136,11 +138,13 @@ M.local_mathslate.MathJaxEditor=function(id){
             return canvas.get('node').one('span').getHTML();
         };
         this.redo = function(){
-            se.redo();
+            se = se.redo();
+            math = se.slots[0];
             render();
         };
         this.undo = function(){
-            se.undo();
+            se = se.undo();
+            math = se.slots[0];
             render();
         };
         render();
