@@ -12,9 +12,12 @@ M.local_mathslate.config="http:./config.json";
 <script src="./yui/build/moodle-local_mathslate-snippeteditor/moodle-local_mathslate-snippeteditor-debug.js"> </script>
 <script src="./yui/build/moodle-local_mathslate-mathjaxeditor/moodle-local_mathslate-mathjaxeditor-debug.js"> </script>
 <script src="./yui/build/moodle-local_mathslate-editor/moodle-local_mathslate-editor-debug.js"> </script>
+<script src="./yui/build/moodle-local_mathslate-textool/moodle-local_mathslate-textool-debug.js"> </script>
 <div id='editor'></div>
 <script>
-YUI().use('moodle-local_mathslate-editor', function (Y) {
+YUI().use('moodle-local_mathslate-editor','moodle-local_mathslate-textool', function (Y) {
+MathJax.Hub.Queue(['Typeset',MathJax.Hub]);
+new M.local_mathslate.TeXTool('#editor');
 var editor = new M.local_mathslate.Editor('#editor',"http:./config.json");
 });
 </script>
