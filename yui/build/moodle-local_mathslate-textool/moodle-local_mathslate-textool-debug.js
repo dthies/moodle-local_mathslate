@@ -28,7 +28,7 @@ M.local_mathslate.TeXTool=function(editorID){
     var tool=Y.Node.create('<span>\\( \\)</span>');
     Y.one(editorID).appendChild(input);
     Y.one(editorID).appendChild(tool);
-    var drag=new Y.DD.Drag({node: '#'+tool.generateID()});
+    var drag=new Y.DD.Drag({node: tool});
     drag.on('drag:end', function() {
         this.get('node').setStyle('top' , '0');
         this.get('node').setStyle('left' , '0');
@@ -43,8 +43,9 @@ M.local_mathslate.TeXTool=function(editorID){
             mml = mml.replace(/.*<math xmlns=\"http:\/\/www.w3.org\/1998\/Math\/MathML\">\s*/,'[').replace(/\s*<\/math.*/,']');
             if (/<mtext mathcolor="red">/.test(mml)) {
                 snippet=[''];
-                alert('Invalid expression');
-                return false;
+                tool.json=null;
+                tool.setHTML('Unrecognized Expression');
+                return;
             }
             snippet = mml.replace('<mrow>', '["mrow",{"tex": "'+input.getDOMNode().value +'"},[');
             snippet = snippet.replace(/ class="[^"]*"/g,'');
@@ -67,11 +68,11 @@ M.local_mathslate.TeXTool=function(editorID){
     
             tool.json=snippet;
             snippet=[Y.JSON.parse(snippet)];
-            Y.one('#'+tool.generateID()).setHTML('');
+            tool.setHTML('');
         }
         MathJax.Hub.Queue(findSnippet);
 
-        MathJax.Hub.Queue(['addElement',MathJax.HTML,Y.one('#'+tool.generateID()).getDOMNode(), 'span',{},[['math',{},snippet]]]);
+        MathJax.Hub.Queue(['addElement',MathJax.HTML,tool.getDOMNode(), 'span',{},[['math',{},snippet]]]);
         MathJax.Hub.Queue(['Typeset',MathJax.Hub,tool.generateID()]);
         MathJax.Hub.Queue(function(){
             drag.set('data',tool.json);
