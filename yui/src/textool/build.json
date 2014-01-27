@@ -1,0 +1,8 @@
+{
+  "name" : "moodle-local_mathslate-textool" ,
+  "builds" : {
+      "moodle-local_mathslate-textool": { 
+          "jsfiles" : [ "textool.js" ]
+       }
+  }
+}
