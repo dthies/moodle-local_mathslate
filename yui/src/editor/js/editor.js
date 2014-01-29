@@ -80,7 +80,7 @@ M.local_mathslate.Editor=function(editorID,config){
             );
         if(Y.one('#'+toolboxID)){
             tabview.render('#'+toolboxID);
-            new M.local_mathslate.TeXTool('#latex-input');
+            new M.local_mathslate.TeXTool('#latex-input',function(json){mje.addMath(json);});
         }
     
     },

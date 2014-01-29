@@ -23,9 +23,14 @@ M.local_mathslate = M.local_mathslate|| {};
  * @param string editorID
  * @param string config
  */
-M.local_mathslate.TeXTool=function(editorID){
+M.local_mathslate.TeXTool=function(editorID,addMath){
     var input=Y.Node.create('<input type="text">');
     var tool=Y.Node.create('<span>\\( \\)</span>');
+    if(addMath){
+        tool.on('click',function(){
+            addMath(tool.json);
+        });
+    }
     Y.one(editorID).appendChild(input);
     Y.one(editorID).appendChild(tool);
     var drag=new Y.DD.Drag({node: tool});
@@ -42,6 +47,7 @@ M.local_mathslate.TeXTool=function(editorID){
             var mml = MathJax.Hub.getAllJax(tool.generateID())[0].root.toMathML();
             mml = mml.replace(/.*<math xmlns=\"http:\/\/www.w3.org\/1998\/Math\/MathML\">\s*/,'[').replace(/\s*<\/math.*/,']');
             if (/<mtext mathcolor="red">/.test(mml)||/<merror/.test(mml)) {
+                console.log(mml);
                 snippet=[''];
                 tool.json=null;
                 tool.setHTML('Unrecognized Expression');
@@ -77,6 +83,7 @@ M.local_mathslate.TeXTool=function(editorID){
         MathJax.Hub.Queue(['Typeset',MathJax.Hub,tool.generateID()]);
         MathJax.Hub.Queue(function(){
             drag.set('data',tool.json);
+            addMath(tool.json);
         });
     });
 };
