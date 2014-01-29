@@ -31,6 +31,7 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
     }
     Y.one(editorID).appendChild(input);
     Y.one(editorID).appendChild(tool);
+    input.focus();
     var drag=new Y.DD.Drag({node: tool});
     drag.on('drag:end', function() {
         this.get('node').setStyle('top' , '0');
