@@ -39,7 +39,7 @@ M.local_mathslate.TeXTool=function(editorID){
         function findSnippet() {
             var mml = MathJax.Hub.getAllJax(tool.generateID())[0].root.toMathML();
             mml = mml.replace(/.*<math xmlns=\"http:\/\/www.w3.org\/1998\/Math\/MathML\">\s*/,'[').replace(/\s*<\/math.*/,']');
-            if (/<mtext mathcolor="red">/.test(mml)) {
+            if (/<mtext mathcolor="red">/.test(mml)||/<merror/.test(mml)) {
                 snippet=[''];
                 tool.json=null;
                 tool.setHTML('Unrecognized Expression');
@@ -57,6 +57,7 @@ M.local_mathslate.TeXTool=function(editorID){
             });
 
             snippet=snippet.replace(/<mi mathvariant="italic">/g,'["mi",{"mathvariant": "italic"},"');
+            snippet=snippet.replace(/<mstyle displaystyle="true">/g,'["mstyle",{"displaystyle": "true"},').replace(/<\/mstyle>/g,']');
             snippet=snippet.replace(/,\s*\]/g,']');
             snippet=snippet.replace(/\\/g,'\\\\');
             snippet=snippet.replace(/<!--.*?-->/g,'');
