@@ -1,6 +1,6 @@
 {
   "moodle-local_mathslate-editor" : {
-      "requires" : [ "dd-drag", "dd-proxy", "dd-drop", "event", "tabview", "io-base", "json", "moodle-local_mathslate-mathjaxeditor" ]
+      "requires" : [ "dd-drag", "dd-proxy", "dd-drop", "event", "tabview", "io-base", "json", "moodle-local_mathslate-textool", "moodle-local_mathslate-mathjaxeditor" ]
   }
 }
 

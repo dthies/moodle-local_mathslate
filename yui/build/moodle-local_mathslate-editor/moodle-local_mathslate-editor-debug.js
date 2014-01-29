@@ -68,7 +68,7 @@ M.local_mathslate.Editor=function(editorID,config){
             findBlank(snippet);
             tbox.tools.push(this);
         }
-        var tabs={children: []};
+        var tabs={children: [{label: "LaTeX", content: "<span id='latex-input'></span>"}]};
         tools.forEach(function(tab){
             var q=Y.Node.create('<span></span>');
             tab.tools.forEach(function(snippet){
@@ -81,7 +81,8 @@ M.local_mathslate.Editor=function(editorID,config){
             tabs
             );
         if(Y.one('#'+toolboxID)){
-        tabview.render('#'+toolboxID);
+            tabview.render('#'+toolboxID);
+            new M.local_mathslate.TeXTool('#latex-input');
         }
     
     },
@@ -142,6 +143,7 @@ M.local_mathslate.Editor=function(editorID,config){
         "tabview",
         "io-base",
         "json",
+        "moodle-local_mathslate-textool",
         "moodle-local_mathslate-mathjaxeditor"
     ]
 });

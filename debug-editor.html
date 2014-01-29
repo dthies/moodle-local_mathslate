@@ -17,7 +17,6 @@ M.local_mathslate.config="http:./config.json";
 <script>
 YUI().use('moodle-local_mathslate-editor','moodle-local_mathslate-textool', function (Y) {
 MathJax.Hub.Queue(['Typeset',MathJax.Hub]);
-new M.local_mathslate.TeXTool('#editor');
 var editor = new M.local_mathslate.Editor('#editor',"http:./config.json");
 });
 </script>
