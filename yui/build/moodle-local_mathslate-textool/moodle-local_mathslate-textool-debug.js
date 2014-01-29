@@ -59,7 +59,7 @@ M.local_mathslate.TeXTool=function(editorID){
             });
 
             snippet=snippet.replace(/<mi mathvariant="italic">/g,'["mi",{"mathvariant": "italic"},"');
-            snippet=snippet.replace(/<mstyle displaystyle="true">/g,'["mstyle",{"displaystyle": "true"},').replace(/<\/mstyle>/g,']');
+            snippet=snippet.replace(/<mstyle displaystyle="true">/g,'["mstyle",{"displaystyle": "true"},[').replace(/<\/mstyle>/g,']]');
             snippet=snippet.replace(/,\s*\]/g,']');
             snippet=snippet.replace(/\\/g,'\\\\');
             snippet=snippet.replace(/<!--.*?-->/g,'');
