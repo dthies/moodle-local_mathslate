@@ -25,6 +25,7 @@ M.local_mathslate.Editor=function(editorID,config){
 /* Callback function to insert math into text after button is clicked.
  * params string Markup to be inserted.
  */
+    MathJax.Hub.setRenderer('HTML-CSS');
     this.insertMath = null;
     var toolboxID=Y.guid();
     var workID=Y.guid();
