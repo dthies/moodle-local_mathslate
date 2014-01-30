@@ -17,12 +17,18 @@ YUI.add('moodle-local_mathslate-snippeteditor', function (Y, NAME) {
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 M.local_mathslate = M.local_mathslate|| {};
+/* Constructor function for Snippet editor
+ * @function M.local_mathstal.mSlots
+ */
 M.local_mathslate.mSlots= function(){
     var selected;
     var stack=[];
     var stackPointer=0;
     var slots=[];
     this.slots=slots;
+/* save the state of the editor on the stack at location Stackpointer
+ * @function saveState
+ */
     function saveState () {
         stack.splice(stackPointer);
         var cs = slots.slice(0);
@@ -32,10 +38,12 @@ M.local_mathslate.mSlots= function(){
         });
         stack[stackPointer]=[cs,ci];
     }
+/* restore a saved state of the editor from the stack
+ * @function restoreState
+ */
     function restoreState() {
         slots.splice(0);
         if(slots[0]){slots.pop();}
-if(!stack[stackPointer]){alert('error');}
         var cs = stack[stackPointer][0];
         var ci = stack[stackPointer][1];
         cs.forEach(function(s,i) {
@@ -47,6 +55,9 @@ if(!stack[stackPointer]){alert('error');}
             slots.push(s);
         });
     }
+/* Restore previous state after undo
+ * @method redo
+ */
     this.redo=function() {
         if(!stack[stackPointer+1]){
             return this.next||this;
@@ -55,6 +66,9 @@ if(!stack[stackPointer]){alert('error');}
         restoreState();
         return this;
     };
+/* Restore earlier stored state and decrement pointer
+ * @method undo
+ */
     this.undo=function() {
         if(stackPointer===0){
             return this.previous||this;
@@ -67,6 +81,10 @@ if(!stack[stackPointer]){alert('error');}
         restoreState();
         return this;
     };
+/* Create an expression from json of a snippet passed
+ * @method createItem
+ * @param string json
+ */
     this.createItem = function(json) {
         function findBlank(snippet) {
             if (Array.isArray(snippet[2])) {
@@ -91,6 +109,10 @@ if(!stack[stackPointer]){alert('error');}
             findBlank(newMath);
         return newMath;
     };
+/* Locate a draggable expression by its currently assigned ID
+ * @method getItemById
+ * @param string id
+ */
     this.getItemByID = function(id){
         var str;
         this.slots.forEach(function(slot){
@@ -99,6 +121,11 @@ if(!stack[stackPointer]){alert('error');}
             });
         });
         return str;},
+/* Determine whether ID corresponds to a valid draggable expression
+ * @method isItem
+ * @param string id
+ * @return boolean
+ */
     this.isItem = function(id) {
         var found=false;
         this.slots.forEach(function(slot){
@@ -108,6 +135,11 @@ if(!stack[stackPointer]){alert('error');}
             });
         });
         return found;},
+/* Delete an expression and return the snippet of the expression
+ * @method removeSnippet
+ * @param string id
+ * @return array
+ */
     this.removeSnippet = function(id){
         var item=0;
         this.slots.forEach(function(slot){
@@ -120,6 +152,11 @@ if(!stack[stackPointer]){alert('error');}
         });
         return item;
     },
+/* Insert the snippet of an expression before expression with given ID
+ * @method removeSnippet
+ * @param string id
+ * @param array s
+ */
     this.insertSnippet = function(id,s){
         var item=0;
         this.slots.forEach(function(slot){
@@ -136,6 +173,10 @@ if(!stack[stackPointer]){alert('error');}
         saveState();
         return ;
     },
+/* Add new expression to workspace following all others
+ * @method append
+ * @param array element
+ */
     this.append = function(element){
         slots[0].push(element);
         stackPointer++;
@@ -143,6 +184,10 @@ if(!stack[stackPointer]){alert('error');}
         saveState();
         return ;
     },
+/* Iterate through all draggable expressions executing callback
+ * @method forEach
+ * @param function f
+ */
     this.forEach = function(f){
         this.slots.forEach(function(slot){
             slot.forEach(function (m){
@@ -150,6 +195,9 @@ if(!stack[stackPointer]){alert('error');}
                 });
             });
         },
+/* Assign new IDs to all elements to avoid inference of MathJax with YUI in display
+ * @method rekey
+ */
     this.rekey = function(){
         var buffer=this;
         this.slots.forEach(function(s){
@@ -166,6 +214,10 @@ if(!stack[stackPointer]){alert('error');}
             
         });
     },
+/* Return output in various formats
+ * @method output
+ * @param string format
+ */
     this.output = function (format) {
             function generateMarkup (s) {
                var str='';
@@ -200,6 +252,10 @@ if(!stack[stackPointer]){alert('error');}
                });
             return str;
     };
+/* Return output in various formats with html tags included to display in browser
+ * @method output
+ * @param string format
+ */
     this.preview = function (format) {
             function generateMarkup (s) {
                var str='';
@@ -240,6 +296,10 @@ if(!stack[stackPointer]){alert('error');}
                });
             return str;
     };
+/* Mark expression with current ID as selected
+ * @method select
+ * @param string id
+ */
     this.select = function(id){
         selected=null;
         this.slots.forEach(function(slot){
@@ -248,6 +308,11 @@ if(!stack[stackPointer]){alert('error');}
             });
         });
     };
+/* Get ID of the selected expression
+ * @method getSelected
+ * @param string id
+ * @return string || false
+ */
     this.getSelected = function() {
         return selected && selected[1].id;
     };
