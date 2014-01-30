@@ -8,7 +8,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Atto text editor mathslate plugin.
+ * Text editor mathslate plugin.
  *
  * @package    local_mathslate
  * @copyright  2013 Daniel Thies  <dthies@ccal.edu>
@@ -22,17 +22,17 @@ M.local_mathslate = M.local_mathslate|| {};
  * @param string config
  */
 M.local_mathslate.Editor=function(editorID,config){
-/* Callback function to insert math into text after button is clicked.
- * params string Markup to be inserted.
- */
+    //Set MathJax to us HTML-CSS rendering on all browsers
     MathJax.Hub.setRenderer('HTML-CSS');
-    this.insertMath = null;
     var toolboxID=Y.guid();
     var workID=Y.guid();
     this.node=Y.one(editorID);
+    //Place buttons for internal editor functions along top
     var undo=this.node.appendChild(Y.Node.create('<button>Undo</button>'));
     var redo=this.node.appendChild(Y.Node.create('<button>Redo</button>'));
     var clear=this.node.appendChild(Y.Node.create('<button>Clear</button>'));
+
+    //Place math editor on page
     this.node.appendChild(Y.Node.create('<div id="' +toolboxID +'">'));
     this.node.appendChild(Y.Node.create('<div id="' +workID +'" >'));
 
@@ -117,6 +117,7 @@ M.local_mathslate.Editor=function(editorID,config){
         });
     }
     
+    //Fetch configuration string for tools and initialyze
     Y.on('io:success',function(id,o){
         if(tbox.tools.length===0) {
             tbox.fillToolBox(Y.JSON.parse(o.response));

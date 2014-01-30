@@ -8,7 +8,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Atto text editor mathslate plugin.
+ * Text editor mathslate plugin.
  *
  * @package    local_mathslate
  * @copyright  2013 Daniel Thies  <dthies@ccal.edu>

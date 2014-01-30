@@ -1,4 +1,21 @@
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Text editor mathslate plugin.
+ *
+ * @package    local_mathslate
+ * @copyright  2013 Daniel Thies  <dthies@ccal.edu>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 M.local_mathslate = M.local_mathslate|| {};
+//Constructor for equation workspace
 M.local_mathslate.MathJaxEditor=function(id){
         var math=[];
         var se=new M.local_mathslate.mSlots();
@@ -13,6 +30,9 @@ M.local_mathslate.MathJaxEditor=function(id){
             se.select();
             render();
         });
+/* Add drag and drop functionality
+ * @function makeDraggable
+ */
         function makeDraggable () {
             preview.setHTML(se.preview('tex'));
             se.forEach(function(m){
@@ -100,6 +120,10 @@ M.local_mathslate.MathJaxEditor=function(id){
             MathJax.Hub.Queue(makeDraggable);
         }
         this.render = render;
+/* Method for add adding an object to the workspace
+ * @method addMath
+ * @param string json
+ */
         this.addMath=function(json){
             if(Y.one('.mathslate-selected')){
                 se.insertSnippet(Y.one('.mathslate-selected').getAttribute('id'),se.createItem(json));
@@ -108,6 +132,9 @@ M.local_mathslate.MathJaxEditor=function(id){
             }
             render();
         };
+/* Unselected the selected node if any
+ * @method clear
+ */
         this.clear = function(){
             if(Y.one('.mathslate-selected')){
                 se.removeSnippet(Y.one('.mathslate-selected').getAttribute('id'));
@@ -120,6 +147,10 @@ M.local_mathslate.MathJaxEditor=function(id){
             }
             render();
         };
+/* Return output in various formats
+ * @method output
+ * @param string format
+ */
         this.output = function(format){
             if(format==='MathML') {
                 return canvas.get('node').one('script').getHTML();
