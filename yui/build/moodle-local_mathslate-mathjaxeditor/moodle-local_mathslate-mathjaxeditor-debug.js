@@ -17,13 +17,23 @@ YUI.add('moodle-local_mathslate-mathjaxeditor', function (Y, NAME) {
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 M.local_mathslate = M.local_mathslate|| {};
+var CSS = {
+    SELECTED: 'mathslate-selected',
+    WORKSPACE: 'mathslate-workspace',
+    PREVIEW: 'mathslate-preview',
+    HIGHLIGHT: 'highlight'
+};
+var SELECTORS = {
+    SELECTED: '.' + CSS.SELECTED
+};
+       
 //Constructor for equation workspace
 M.local_mathslate.MathJaxEditor=function(id){
         var math=[];
         var se=new M.local_mathslate.mSlots();
         se.slots.push(math);
-        this.workspace=Y.one(id).append('<div id="canvas" class="mathslate-workspace"/>');
-        var preview = Y.one(id).appendChild(Y.Node.create('<div class="mathslate-preview">'));
+        this.workspace=Y.one(id).append('<div id="canvas" class="'+CSS.WORKSPACE+'"/>');
+        var preview = Y.one(id).appendChild(Y.Node.create('<div class="'+CSS.PREVIEW+'">'));
 
         var canvas=new Y.DD.Drop({
             node: this.workspace.one('#canvas')});
@@ -42,17 +52,17 @@ M.local_mathslate.MathJaxEditor=function(id){
                 if(!node){return;}
                 node.on('click',function(e){
                     e.stopPropagation();
-                    var selectedNode = canvas.get('node').one('.mathslate-selected');
+                    var selectedNode = canvas.get('node').one(SELECTORS.SELECTED);
                     if(!selectedNode){
-                        node.addClass('mathslate-selected');
+                        node.addClass(CSS.SELECTED);
                         se.select(node.getAttribute('id'));
-                        preview.one('#'+node.getAttribute('id')).addClass('mathslate-selected');
+                        preview.one('#'+node.getAttribute('id')).addClass(CSS.SELECTED);
                         preview.one('#'+node.getAttribute('id')).focus();
                         return;
                     }
                     if(selectedNode===node){
-                        node.removeClass('mathslate-selected');
-                        preview.one('#'+node.getAttribute('id')).removeClass('mathslate-selected');
+                        node.removeClass(CSS.SELECTED);
+                        preview.one('#'+node.getAttribute('id')).removeClass(CSS.SELECTED);
                         se.select();
                         return;
                     }
@@ -71,9 +81,9 @@ M.local_mathslate.MathJaxEditor=function(id){
                         moveOnEnd: false
                     });
                     drag.on('drag:start', function(){
-                        if(canvas.get('node').one('.mathslate-selected')){
+                        if(canvas.get('node').one(SELECTORS.SELECTED)){
                             se.select();
-                            canvas.get('node').one('.mathslate-selected').removeClass('mathslate-selected');
+                            canvas.get('node').one(SELECTORS.SELECTED).removeClass(CSS.SELECTED);
                         }
                         var id = Y.guid();
                         this.get('dragNode').set('innerHTML','' );
@@ -110,8 +120,8 @@ M.local_mathslate.MathJaxEditor=function(id){
                 
             });
             if(se.getSelected()&&canvas.get('node').one('#'+se.getSelected())) {
-                canvas.get('node').one('#'+se.getSelected()).addClass('mathslate-selected');
-                preview.one('#'+se.getSelected()).addClass('mathslate-selected');
+                canvas.get('node').one('#'+se.getSelected()).addClass(CSS.SELECTED);
+                preview.one('#'+se.getSelected()).addClass(CSS.SELECTED);
             }
         }
         function render() {
@@ -127,8 +137,8 @@ M.local_mathslate.MathJaxEditor=function(id){
  * @param string json
  */
         this.addMath=function(json){
-            if(Y.one('.mathslate-selected')){
-                se.insertSnippet(Y.one('.mathslate-selected').getAttribute('id'),se.createItem(json));
+            if(Y.one(SELECTORS.SELECTED)){
+                se.insertSnippet(Y.one(SELECTORS.SELECTED).getAttribute('id'),se.createItem(json));
             } else {
                 se.append(se.createItem(json));
             }
@@ -138,8 +148,8 @@ M.local_mathslate.MathJaxEditor=function(id){
  * @method clear
  */
         this.clear = function(){
-            if(Y.one('.mathslate-selected')){
-                se.removeSnippet(Y.one('.mathslate-selected').getAttribute('id'));
+            if(Y.one(SELECTORS.SELECTED)){
+                se.removeSnippet(Y.one(SELECTORS.SELECTED).getAttribute('id'));
             } else {
                 math=[];
                 se.next=new M.local_mathslate.mSlots();
