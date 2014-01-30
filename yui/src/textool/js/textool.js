@@ -48,7 +48,7 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
             if (/<mtext mathcolor="red">/.test(mml)||/<merror/.test(mml)) {
                 console.log(mml);
                 snippet=[''];
-                tool.json=null;
+                tool.json='["",{},""]';
                 tool.setHTML('Unrecognized Expression');
                 return;
             }
@@ -63,7 +63,7 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
                 snippet = snippet.replace(new RegExp('<'+tag+'>','g'),'["'+tag+'",{},"').replace(new RegExp('</'+tag+'>',"g"),'"],');
             });
 
-            snippet=snippet.replace(/<mi mathvariant="italic">/g,'["mi",{"mathvariant": "italic"},"');
+            snippet=snippet.replace(/<mi mathvariant="([a-z]*)">/g,'["mi",{"mathvariant": "$1"},"');
             snippet=snippet.replace(/<mstyle displaystyle="true">/g,'["mstyle",{"displaystyle": "true"},[').replace(/<\/mstyle>/g,']]');
             snippet=snippet.replace(/,\s*\]/g,']');
             snippet=snippet.replace(/\\/g,'\\\\');
@@ -73,6 +73,10 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
             snippet='["mrow", {"tex":["'+input.getDOMNode().value.replace(/\\/g,'\\\\')+'"]},' + snippet + ']';
     
             tool.json=snippet;
+            if(/</.test(snippet)){
+                console.log(snippet);
+                tool.json='["",{},""]';
+            }
             snippet=[Y.JSON.parse(snippet)];
             tool.setHTML('');
         }
