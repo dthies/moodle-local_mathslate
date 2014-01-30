@@ -7,7 +7,6 @@
 }
 
 .mathslate-preview {
-    width: 373px;
     height: 130px;
     border: solid 1px;
     overflow: scroll;
@@ -15,9 +14,19 @@
 }
 .mathslate-workspace {
     background-color: #CDF; 
+    background-color: #DDD; 
     height: 150px;
-    width: 375px;
     text-align: center;
     line-height: 150px;
     vertical-align: middle;
+}
+.mathslate-toolbox {
+color: #666;
+}
+.yui3-tabview-panel p {
+padding: 1px;
+}
+.yui3-tabview-panel {
+width: 373;
+height: 40px;
 }

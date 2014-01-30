@@ -18,6 +18,9 @@ YUI.add('moodle-local_mathslate-editor', function (Y, NAME) {
  */
 
 M.local_mathslate = M.local_mathslate|| {};
+var CSS = {
+   TOOLBOX: 'mathslate-toolbox'
+};
 /* Constructor function for an editor of a page.
  * @method Editor
  * @param string editorID
@@ -35,7 +38,7 @@ M.local_mathslate.Editor=function(editorID,config){
     var clear=this.node.appendChild(Y.Node.create('<button>Clear</button>'));
 
     //Place math editor on page
-    this.node.appendChild(Y.Node.create('<div id="' +toolboxID +'">'));
+    this.node.appendChild(Y.Node.create('<div id="' +toolboxID +'" class="'+CSS.TOOLBOX+'">'));
     this.node.appendChild(Y.Node.create('<div id="' +workID +'" >'));
 
     var mje=new M.local_mathslate.MathJaxEditor('#'+workID);
@@ -71,10 +74,11 @@ M.local_mathslate.Editor=function(editorID,config){
         }
         var tabs={children: [{label: "LaTeX", content: "<span id='latex-input'></span>"}]};
         tools.forEach(function(tab){
-            var q=Y.Node.create('<span></span>');
+            var q=Y.Node.create('<p></p>');
             tab.tools.forEach(function(snippet){
                 var t = new Tool(snippet);
                 MathJax.HTML.addElement(q.getDOMNode(),'span',{},t.HTMLsnippet);
+                q.append(' &nbsp; ');
                 });
             tabs.children.push({label: tab.label, content: q.getHTML()});
         });
