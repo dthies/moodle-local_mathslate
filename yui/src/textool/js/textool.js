@@ -1,4 +1,3 @@
-//
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,7 +22,7 @@ M.local_mathslate = M.local_mathslate|| {};
  */
 M.local_mathslate.TeXTool=function(editorID,addMath){
     var input=Y.Node.create('<input type="text">');
-    var tool=Y.Node.create('<span>\\( \\)</span>');
+    var tool=Y.Node.create('<span>\\[ \\]</span>');
     if(addMath){
         tool.on('click',function(){
             addMath(tool.json);
@@ -38,18 +37,20 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
         this.get('node').setStyle('left' , '0');
     });
     input.on ('change',function(){
-        tool.setHTML('<span>\\('+input.getDOMNode().value+'\\)</span>');
+        var jax = MathJax.Hub.getAllJax(tool.generateID())[0];
+        MathJax.Hub.Queue(['Text',jax,input.getDOMNode().value]);
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,tool.generateID()]);
 
         var snippet;
         function findSnippet() {
             var mml = MathJax.Hub.getAllJax(tool.generateID())[0].root.toMathML();
-            mml = mml.replace(/.*<math xmlns=\"http:\/\/www.w3.org\/1998\/Math\/MathML\">\s*/,'[').replace(/\s*<\/math.*/,']');
+            mml = mml.replace(/.*<math xmlns=\"http:\/\/www.w3.org\/1998\/Math\/MathML\" display=\"block\">\s*/,'[').replace(/\s*<\/math.*/,']');
             if (/<mtext mathcolor="red">/.test(mml)||/<merror/.test(mml)) {
                 console.log(mml);
                 snippet=[''];
-                tool.json='["",{},""]';
-                tool.setHTML('Unrecognized Expression');
+                tool.json=null;
+                MathJax.Hub.Queue(['Text',jax,'']);
+                //tool.setHTML('Unrecognized Expression');
                 return;
             }
             snippet = mml.replace('<mrow>', '["mrow",{"tex": "'+input.getDOMNode().value +'"},[');
@@ -73,17 +74,16 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
             snippet='["mrow", {"tex":["'+input.getDOMNode().value.replace(/\\/g,'\\\\')+'"]},' + snippet + ']';
     
             tool.json=snippet;
-            if(/</.test(snippet)){
+            if(/<[a-z]/.test(snippet)){
                 console.log(snippet);
-                tool.json='["",{},""]';
+                snippet=[''];
+                tool.json=null;
+                return;
             }
             snippet=[Y.JSON.parse(snippet)];
-            tool.setHTML('');
         }
         MathJax.Hub.Queue(findSnippet);
 
-        MathJax.Hub.Queue(['addElement',MathJax.HTML,tool.getDOMNode(), 'span',{},[['math',{},snippet]]]);
-        MathJax.Hub.Queue(['Typeset',MathJax.Hub,tool.generateID()]);
         MathJax.Hub.Queue(function(){
             drag.set('data',tool.json);
             addMath(tool.json);

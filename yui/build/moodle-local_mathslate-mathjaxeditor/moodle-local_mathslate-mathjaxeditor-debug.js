@@ -137,6 +137,9 @@ M.local_mathslate.MathJaxEditor=function(id){
  * @param string json
  */
         this.addMath=function(json){
+            if(!json){
+                return;
+            }
             if(Y.one(SELECTORS.SELECTED)){
                 se.insertSnippet(Y.one(SELECTORS.SELECTED).getAttribute('id'),se.createItem(json));
             } else {
