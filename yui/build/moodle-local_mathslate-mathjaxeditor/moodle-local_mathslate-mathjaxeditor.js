@@ -46,6 +46,7 @@ M.local_mathslate.MathJaxEditor=function(id){
  * @function makeDraggable
  */
         function makeDraggable () {
+//alert(canvas.get('node').getHTML());
             preview.setHTML(se.preview('tex'));
             se.forEach(function(m){
                 var node=canvas.get('node').one('#'+m[1].id);
@@ -89,7 +90,7 @@ M.local_mathslate.MathJaxEditor=function(id){
                         this.get('dragNode').set('innerHTML','' );
                         MathJax.Hub.Queue(['addElement',MathJax.HTML,
                             this.get('dragNode').getDOMNode(),'span',{id: id},
-                            [['math',{},[Y.JSON.parse(se.getItemByID(m[1].id))]]]]);
+                            [['math',{display: "block"},[Y.JSON.parse(se.getItemByID(m[1].id))]]]]);
                         MathJax.Hub.Queue(['Typeset',MathJax.Hub,id]);
                     
                     });
@@ -127,7 +128,7 @@ M.local_mathslate.MathJaxEditor=function(id){
         function render() {
             se.rekey();
             canvas.get('node').setHTML('');
-            MathJax.Hub.Queue(['addElement',MathJax.HTML,canvas.get('node').getDOMNode(),'span',{},[['math',{},math]]]);
+            MathJax.Hub.Queue(['addElement',MathJax.HTML,canvas.get('node').getDOMNode(),'math',{display: "block"},math]);
             MathJax.Hub.Queue(["Typeset",MathJax.Hub, 'canvas']);
             MathJax.Hub.Queue(makeDraggable);
         }

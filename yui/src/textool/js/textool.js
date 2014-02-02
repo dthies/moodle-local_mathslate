@@ -53,6 +53,7 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
                 //tool.setHTML('Unrecognized Expression');
                 return;
             }
+            //console.log(mml);
             snippet = mml.replace('<mrow>', '["mrow",{"tex": "'+input.getDOMNode().value +'"},[');
             snippet = snippet.replace(/ class="[^"]*"/g,'');
             ['mrow','mfrac','msub','msup','msubsup','munder','mover','munderover','msqrt','mroot'].forEach(function(tag){
@@ -73,6 +74,7 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
 
             snippet='["mrow", {"tex":["'+input.getDOMNode().value.replace(/\\/g,'\\\\')+'"]},' + snippet + ']';
     
+            //console.log(snippet);
             tool.json=snippet;
             if(/<[a-z]/.test(snippet)){
                 console.log(snippet);
