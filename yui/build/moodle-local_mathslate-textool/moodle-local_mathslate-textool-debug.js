@@ -58,7 +58,7 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
             //console.log(mml);
             snippet = mml.replace('<mrow>', '["mrow",{"tex": "'+input.getDOMNode().value +'"},[');
             snippet = snippet.replace(/ class="[^"]*"/g,'');
-            ['mrow','mfrac','msub','msup','msubsup','munder','mover','munderover','msqrt','mroot'].forEach(function(tag){
+            ['mrow','mfrac','msub','msup','msubsup','munder','mover','munderover','msqrt','mroot','mtable','mtr','mtd'].forEach(function(tag){
                 snippet = snippet.replace(new RegExp('<'+tag+'>','g'),'["'+tag+'",{},[').replace(new RegExp('</'+tag+'>',"g"),"]],");
             });
             snippet=snippet.replace(/<mo stretchy="false">/g,'["mo",{"stretchy": "false"},"');
@@ -68,6 +68,7 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
             });
 
             snippet=snippet.replace(/<mi mathvariant="([a-z]*)">/g,'["mi",{"mathvariant": "$1"},"');
+            snippet=snippet.replace(/<mtable rowspacing="([^"]*)" columnspacing="([^"]*)">/g,'["mtable", {"rowspacing":"$1","columnspacing":"$2"},[');
             snippet=snippet.replace(/<mstyle displaystyle="true">/g,'["mstyle",{"displaystyle": "true"},[').replace(/<\/mstyle>/g,']]');
             snippet=snippet.replace(/,\s*\]/g,']');
             snippet=snippet.replace(/\\/g,'\\\\');
@@ -76,7 +77,7 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
 
             snippet='["mrow", {"tex":["'+input.getDOMNode().value.replace(/\\/g,'\\\\')+'"]},' + snippet + ']';
     
-            //console.log(snippet);
+            console.log(snippet);
             tool.json=snippet;
             if(/<[a-z]/.test(snippet)){
                 console.log(snippet);

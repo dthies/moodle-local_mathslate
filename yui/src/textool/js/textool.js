@@ -75,7 +75,7 @@ M.local_mathslate.TeXTool=function(editorID,addMath){
 
             snippet='["mrow", {"tex":["'+input.getDOMNode().value.replace(/\\/g,'\\\\')+'"]},' + snippet + ']';
     
-            //console.log(snippet);
+            console.log(snippet);
             tool.json=snippet;
             if(/<[a-z]/.test(snippet)){
                 console.log(snippet);
