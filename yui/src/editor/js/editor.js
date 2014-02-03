@@ -17,7 +17,10 @@
 
 M.local_mathslate = M.local_mathslate|| {};
 var CSS = {
-   TOOLBOX: 'mathslate-toolbox'
+   TOOLBOX: 'mathslate-toolbox',
+   UNDO: 'mathslate-undo-button',
+   REDO: 'mathslate-redo-button',
+   CLEAR: 'mathslate-clear-button'
 };
 /* Constructor function for an editor of a page.
  * @method Editor
@@ -31,9 +34,9 @@ M.local_mathslate.Editor=function(editorID,config){
     var workID=Y.guid();
     this.node=Y.one(editorID);
     //Place buttons for internal editor functions along top
-    var undo=this.node.appendChild(Y.Node.create('<button>Undo</button>'));
-    var redo=this.node.appendChild(Y.Node.create('<button>Redo</button>'));
-    var clear=this.node.appendChild(Y.Node.create('<button>Clear</button>'));
+    var undo=this.node.appendChild(Y.Node.create('<button class="'+CSS.UNDO+'">Undo</button>'));
+    var redo=this.node.appendChild(Y.Node.create('<button class="'+CSS.REDO+'">Redo</button>'));
+    var clear=this.node.appendChild(Y.Node.create('<button class="'+CSS.CLEAR+'">Clear</button>'));
 
     //Place math editor on page
     this.node.appendChild(Y.Node.create('<div id="' +toolboxID +'" class="'+CSS.TOOLBOX+'">'));
