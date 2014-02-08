@@ -35,10 +35,17 @@ M.local_mathslate.Editor=function(editorID,config){
     var toolboxID=Y.guid();
     var workID=Y.guid();
     this.node=Y.one(editorID);
+    this.node.addClass('mathslate-editor');
     //Place buttons for internal editor functions along top
-    var undo=this.node.appendChild(Y.Node.create('<button class="'+CSS.UNDO+'">Undo</button>'));
-    var redo=this.node.appendChild(Y.Node.create('<button class="'+CSS.REDO+'">Redo</button>'));
-    var clear=this.node.appendChild(Y.Node.create('<button class="'+CSS.CLEAR+'">Clear</button>'));
+    var undo=this.node.appendChild(Y.Node.create('<button class="'
+           +CSS.UNDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
+           + M.util.image_url('undo', 'local_mathslate') + '" title="Undo"/></button>'));
+    var redo=this.node.appendChild(Y.Node.create('<button class="'
+           +CSS.REDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
+           + M.util.image_url('redo', 'local_mathslate') + '" title="Redo"/></button>'));
+    var clear=this.node.appendChild(Y.Node.create('<button class="'
+           +CSS.CLEAR+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
+           + M.util.image_url('delete', 'local_mathslate') + '" title="Clear"/></button>'));
 
     //Place math editor on page
     this.node.appendChild(Y.Node.create('<div id="' +toolboxID +'" class="'+CSS.TOOLBOX+'">'));
@@ -81,7 +88,7 @@ M.local_mathslate.Editor=function(editorID,config){
             tab.tools.forEach(function(snippet){
                 var t = new Tool(snippet);
                 MathJax.HTML.addElement(q.getDOMNode(),'span',{},t.HTMLsnippet);
-                q.append(' &nbsp; ');
+                q.append('&nbsp; &nbsp;');
                 });
             tabs.children.push({label: tab.label, content: q.getHTML()});
         });
