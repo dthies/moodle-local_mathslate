@@ -86,7 +86,7 @@ M.local_mathslate.Editor=function(editorID,config){
             tab.tools.forEach(function(snippet){
                 var t = new Tool(snippet);
                 MathJax.HTML.addElement(q.getDOMNode(),'span',{},t.HTMLsnippet);
-                if(snippet[0]&&snippet[0]!=='br'){q.append('&nbsp; &nbsp;');}
+                if(snippet[0]&&snippet[0]!=='br'){q.append('&thinsp; &thinsp;');}
                 });
             tabs.children.push({label: tab.label, content: q.getHTML()});
         });
