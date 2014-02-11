@@ -14,13 +14,11 @@
 }
 
 .mathslate-editor {
-    width: 375px
 }
 .mathslate-workspace {
     background-color: #CDF; 
     background-color: #DDD; 
     height: 100px;
-    width: 375px
     text-align: center;
     line-height: 100px;
     vertical-align: middle;

@@ -94,7 +94,8 @@ M.local_mathslate.mSlots= function(){
                     }
                     else if(a==='[]') {
                         var newID=Y.guid();
-                        slots.push([['mi',{id: newID, "class": 'blank', tex: ['']},'[drop]']]);
+                        //slots.push([['mi',{id: newID, "class": 'blank', tex: ['']},'[drop]']]);
+                        slots.push([['mi',{id: newID, "class": 'blank', tex: [''],color:'blue'},'\u25FB']]);
                         snippet[2][snippet[2].indexOf(a)]=['mrow',{},slots[slots.length-1]];
                     }
                 });
@@ -202,7 +203,8 @@ M.local_mathslate.mSlots= function(){
         var buffer=this;
         this.slots.forEach(function(s){
             if(s.length===0)  {
-                s.push(['mi',{id: Y.guid(), "class": 'blank', tex: ['']},'[drop]']);
+                //s.push(['mi',{id: Y.guid(), "class": 'blank', tex: ['']},'[drop]']);
+                s.push(['mi',{id: Y.guid(), "class": 'blank', tex: ['']},'\u25FB']);
             }
             else {
                 s.forEach(function(m){

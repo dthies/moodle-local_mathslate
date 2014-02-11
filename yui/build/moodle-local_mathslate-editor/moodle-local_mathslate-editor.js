@@ -82,7 +82,11 @@ M.local_mathslate.Editor=function(editorID,config){
             findBlank(snippet);
             tbox.tools.push(this);
         }
-        var tabs={children: [{label: "LaTeX", content: "<span id='latex-input'></span>"}]};
+        var tabs={children: [{label: "<math><mi>T</mi><mspace width=\"-.14em\" />"
+             +"<mpadded height=\"-.5ex\" depth=\"+.5ex\" voffset=\"-.5ex\">"
+             +"<mrow class=\"MJX-TeXAtom-ORD\"><mi>E</mi></mrow></mpadded>"
+             +"<mspace width=\"-.115em\" /> <mi>X</mi> </math>",
+        content: "<span id='latex-input'></span>"}]};
         tools.forEach(function(tab){
             var q=Y.Node.create('<p></p>');
             tab.tools.forEach(function(snippet){
