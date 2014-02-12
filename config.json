@@ -94,7 +94,8 @@
             ["mi",{"tex":["\\mathbb Z"]}, "\u2124"],
             ["mo",{"tex":["\\infty"],"am":[" oo "]},"&infin;"],
             ["mrow", {"tex":["\\aleph"],"am":[" aleph "]},[["mi",{"mathvariant": "normal"},"\u2135"]]],
-            ["mrow", {"tex":["\\digamma"]},[["mi",{},"\u03DD"]]]
+            ["mrow", {"tex":["\\digamma"]},[["mi",{},"\u03DD"]]],
+            ["mi", {"tex":["\\hbar"]},"\u210F"]
         ]
     },
     {"label":"<math><mi>A</mi><mi>b</mi><mi>3</mi></math>",
@@ -167,6 +168,7 @@
     },
     {"label":"<math><mi>tan</mi><mn>&angle;</mn></math>",
         "tools":[
+            ["mi", {"tex":["\\angle"]},"\u220F"],
             ["mrow",{"tex":["f (",2,")"]},[["mi",{},"f"],["mo",{},"("],"[]",["mo",{},")"]]],
             ["mrow",{"tex":["\\sin {",2,"}"]},[["mi",{},"sin"],["mo",{},"\u2061"],"[]"]],
             ["mrow",{"tex":["\\cos {",2,"}"]},[["mi",{},"cos"],["mo",{},"\u2061"],"[]"]],
