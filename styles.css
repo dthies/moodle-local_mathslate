@@ -1,16 +1,24 @@
 .highlight {
-    color: green;
+    color: yellow;
 }
 
-.mathslate-selected {
-    background-color: blue;
+.mathslate-workspace .mathslate-selected span {
+    background-color: green;
+    background: radial-gradient(#474,#777);
 }
 
 .mathslate-preview {
     height: 130px;
-    border: solid 1px;
+    border: solid 1px #888 ;
     overflow: scroll;
     text-align: left;
+    background: #111;
+    color: #FFF;
+}
+
+.mathslate-preview .mathslate-selected {
+    background-color: 666;
+    background: linear-gradient(to right, #333,#666);
 }
 
 .mathslate-editor {
@@ -18,6 +26,10 @@
 .mathslate-workspace {
     background-color: #CDF; 
     background-color: #DDD; 
+    background-color: #333; 
+    background-image: none ;
+    background-color: #777; 
+    color: #EEE; 
     height: 100px;
     text-align: center;
     line-height: 100px;
@@ -25,11 +37,36 @@
 }
 
 .mathslate-toolbox {
-color: #666;
+color: #888;
 }
 
 .yui3-tabview-panel p {
 padding: 1px;
+}
+
+.mathslate-toolbox .yui3-tabview-panel {
+    background: #EEE;
+}
+
+.mathslate-toolbox .yui3-tab-label {
+    height: 2em;
+    width: 3.25em;
+}
+
+.mathslate-toolbox .yui3-tab-selected .yui3-tab-focused {
+    background-image: none ;
+    background: linear-gradient(to top,#444,#888);
+     
+}
+
+.mathslate-toolbox .yui3-tab-selected .yui3-tab-label {
+    background: #444;
+    background-image: none ;
+    background: linear-gradient(to bottom,#AAA,#444);
+}
+
+.mathslate-toolbox .yui3-tabview-list {
+    border-color: #444;
 }
 
 .yui3-tabview-panel {

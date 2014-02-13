@@ -36,26 +36,29 @@ M.local_mathslate.Editor=function(editorID,config){
     var workID=Y.guid();
     this.node=Y.one(editorID);
     this.node.addClass('mathslate-editor');
-    //Place buttons for internal editor functions along top
-    var undo=this.node.appendChild(Y.Node.create('<button class="'
-           +CSS.UNDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
-           + M.util.image_url('undo', 'local_mathslate') + '" title="Undo"/></button>'));
-    var redo=this.node.appendChild(Y.Node.create('<button class="'
-           +CSS.REDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
-           + M.util.image_url('redo', 'local_mathslate') + '" title="Redo"/></button>'));
-    var clear=this.node.appendChild(Y.Node.create('<button class="'
-           +CSS.CLEAR+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
-           + M.util.image_url('delete', 'local_mathslate') + '" title="Clear"/></button>'));
-
     //Place math editor on page
     this.node.appendChild(Y.Node.create('<div id="' +toolboxID +'" class="'+CSS.TOOLBOX+'">'));
     this.node.appendChild(Y.Node.create('<div id="' +workID +'" >'));
 
     var mje=new M.local_mathslate.MathJaxEditor('#'+workID);
+    //Place buttons for internal editor functions along top of preview
+    var undo=Y.Node.create('<button class="'
+           +CSS.UNDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
+           + M.util.image_url('undo', 'local_mathslate') + '" title="Undo"/></button>');
+    mje.workspace.insert(undo,1);
+    var redo=Y.Node.create('<button class="'
+           +CSS.REDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
+           + M.util.image_url('redo', 'local_mathslate') + '" title="Redo"/></button>');
+    mje.workspace.insert(redo,1);
+    var clear=Y.Node.create('<button class="'
+           +CSS.CLEAR+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
+           + M.util.image_url('delete', 'local_mathslate') + '" title="Clear"/></button>');
+    mje.workspace.insert(clear,1);
+
     var me=this;
     me.output = function(f){return mje.output(f);};
-    undo.on('click',function(){mje.undo();});
     redo.on('click',function(){mje.redo();});
+    undo.on('click',function(){mje.undo();});
     clear.on('click',function(){mje.clear();});
 
     var tbox={tools: [],
