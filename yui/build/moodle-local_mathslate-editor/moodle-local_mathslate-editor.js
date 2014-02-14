@@ -22,7 +22,8 @@ var CSS = {
    TOOLBOX: 'mathslate-toolbox',
    UNDO: 'mathslate-undo-button',
    REDO: 'mathslate-redo-button',
-   CLEAR: 'mathslate-clear-button'
+   CLEAR: 'mathslate-clear-button',
+   HELP: 'mathslate-help-button'
 };
 /* Constructor function for an editor of a page.
  * @method Editor
@@ -42,18 +43,25 @@ M.local_mathslate.Editor=function(editorID,config){
 
     var mje=new M.local_mathslate.MathJaxEditor('#'+workID);
     //Place buttons for internal editor functions along top of preview
-    var undo=Y.Node.create('<button class="'
+    var undo=Y.Node.create('<button type="button" class="'
            +CSS.UNDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
            + M.util.image_url('undo', 'local_mathslate') + '" title="Undo"/></button>');
-    mje.workspace.insert(undo,1);
-    var redo=Y.Node.create('<button class="'
+    var redo=Y.Node.create('<button type="button" class="'
            +CSS.REDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
            + M.util.image_url('redo', 'local_mathslate') + '" title="Redo"/></button>');
-    mje.workspace.insert(redo,1);
-    var clear=Y.Node.create('<button class="'
+    var clear=Y.Node.create('<button type="button" class="'
            +CSS.CLEAR+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
            + M.util.image_url('delete', 'local_mathslate') + '" title="Clear"/></button>');
-    mje.workspace.insert(clear,1);
+    var help=Y.Node.create('<button type="submit" class="'
+           +CSS.HELP+'", formaction="https://github.com/dthies/moodle-local_mathslate/wiki" formtarget="_blank">'
+           + '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
+           + M.util.image_url('help', 'core') + '" title="Help"/></button>');
+    var toolbar=Y.Node.create('<form></form>');
+    mje.workspace.insert(toolbar,1);
+    toolbar.appendChild(clear);
+    toolbar.appendChild(undo);
+    toolbar.appendChild(redo);
+    toolbar.appendChild(help);
 
     var me=this;
     me.output = function(f){return mje.output(f);};

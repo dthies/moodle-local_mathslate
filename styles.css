@@ -2,9 +2,8 @@
     color: yellow;
 }
 
-.mathslate-workspace .mathslate-selected span {
-    background-color: green;
-    background: radial-gradient(#474,#777);
+.mathslate-workspace .mathslate-selected {
+    color: green;
 }
 
 .mathslate-preview {
@@ -26,9 +25,9 @@
 .mathslate-workspace {
     background-color: #CDF; 
     background-color: #DDD; 
-    background-color: #333; 
     background-image: none ;
-    background-color: #777; 
+    background-color: #AAA; 
+    background-color: #333; 
     color: #EEE; 
     height: 100px;
     text-align: center;
@@ -46,6 +45,7 @@ padding: 1px;
 
 .mathslate-toolbox .yui3-tabview-panel {
     background: #EEE;
+    background: radial-gradient(#EEE,#BBB);
 }
 
 .mathslate-toolbox .yui3-tab-label {
