@@ -38,7 +38,7 @@ M.local_mathslate.MathJaxEditor=function(id){
         var canvas=new Y.DD.Drop({
             node: this.workspace.one('#canvas')});
         this.canvas=canvas;
-        this.workspace.on('click',function(){
+        this.canvas.get('node').on('click',function(){
             se.select();
             render();
         });
