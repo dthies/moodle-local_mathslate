@@ -1,11 +1,16 @@
+<!DOCTYPE html>
+<html  dir="ltr" lang="en" xml:lang="en">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script src="http://yui.yahooapis.com/3.14.1/build/yui/yui-min.js"></script>
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
 <link rel="stylesheet" type="text/css" href="http:./styles.css">
-</head>
-<body class="yui3-skin-sam"> 
 <script>
 var M={};
+M.util=M.util||{};
+M.util.image_url=M.util.image_url||function(image,module){
+    return 'http:'+(module=='local_mathslate'?'./pix/':'../../pix/')+image+'.svg';
+}
 M.local_mathslate=M.local_mathslate||{};
 M.local_mathslate.config="http:./config.json";
 </script>
@@ -13,7 +18,9 @@ M.local_mathslate.config="http:./config.json";
 <script src="./yui/build/moodle-local_mathslate-mathjaxeditor/moodle-local_mathslate-mathjaxeditor-debug.js"> </script>
 <script src="./yui/build/moodle-local_mathslate-editor/moodle-local_mathslate-editor-debug.js"> </script>
 <script src="./yui/build/moodle-local_mathslate-textool/moodle-local_mathslate-textool-debug.js"> </script>
-<div id='editor'></div>
+</head>
+<body class="yui3-skin-sam"> 
+<div id='editor' style="width: 600px"></div>
 <script>
 YUI().use('moodle-local_mathslate-editor','moodle-local_mathslate-textool', function (Y) {
 MathJax.Hub.Queue(['Typeset',MathJax.Hub]);
