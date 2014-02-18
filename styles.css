@@ -21,8 +21,24 @@
 .mathslate-preview .mathslate-selected {
     padding-left: 5px;
     border-left: solid 5px green;
+    background-color: #111;
+    animation-duration: 500ms;
+    animation-name: flash;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes flash {
+    from {
+    border-left: solid 5px #1A1;
+    background: linear-gradient(to right, #121,#111);
+    }
+    to {
+    border-left: solid 5px #111;
+    background: linear-gradient(to right, #111,#111);
+    }
     background-color: #666;
-    background: linear-gradient(to right, #121,#111)
+    }
 }
 
 .mathslate-editor {
