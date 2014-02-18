@@ -12,26 +12,30 @@
     overflow: scroll;
     text-align: left;
     background: #111;
-    color: #FFF
+    color: #FFF;
+}
+.mathslate-preview div {
+    padding-left: 10px
 }
 
 .mathslate-preview .mathslate-selected {
-    background-color: 666;
-    background: linear-gradient(to right, #333,#666)
+    padding-left: 5px;
+    border-left: solid 5px green;
+    background-color: #666;
+    background: linear-gradient(to right, #121,#111)
 }
 
 .mathslate-editor {
 }
 .mathslate-workspace {
-    background-color: #CDF; 
-    background-color: #DDD; 
     background-image: none;
-    background-color: #AAA; 
     background-color: #333; 
     color: #EEE; 
     height: 100px;
     text-align: center;
     line-height: 100px;
+    padding: 4px;
+    border: solid black 4px;
     vertical-align: middle
 }
 

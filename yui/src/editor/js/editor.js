@@ -51,7 +51,7 @@ M.local_mathslate.Editor=function(editorID,config){
            +CSS.CLEAR+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
            + M.util.image_url('delete', 'local_mathslate') + '" title="Clear"/></button>');
     var help=Y.Node.create('<button type="submit" class="'
-           +CSS.HELP+'", formaction="https://github.com/dthies/moodle-local_mathslate/wiki" formtarget="_blank">'
+           +CSS.HELP+'", formaction="https://github.com/dthies/moodle-local_mathslate/wiki/Using-Mathslate" formtarget="_blank">'
            + '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
            + M.util.image_url('help', 'core') + '" title="Help"/></button>');
     var toolbar=Y.Node.create('<form></form>');
