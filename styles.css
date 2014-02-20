@@ -22,7 +22,7 @@
     padding-left: 5px;
     border-left: solid 5px green;
     background-color: #111;
-    animation-duration: 500ms;
+    animation-duration: 750ms;
     animation-name: flash;
     animation-iteration-count: infinite;
     animation-direction: alternate;
@@ -30,19 +30,26 @@
 
 @keyframes flash {
     from {
-    border-left: solid 5px #1A1;
+    border-left: solid 5px #1F1;
     background: linear-gradient(to right, #121,#111);
+    }
+    35% {
+    border-left: solid 5px #1E1;
+    background: linear-gradient(to right, #121,#111);
+    }
+    65% {
+    border-left: solid 5px #121;
+    background: linear-gradient(to right, #111,#111);
     }
     to {
     border-left: solid 5px #111;
     background: linear-gradient(to right, #111,#111);
     }
-    background-color: #666;
-    }
 }
 
 .mathslate-editor {
 }
+
 .mathslate-workspace {
     background-image: none;
     background-color: #333; 
@@ -51,7 +58,10 @@
     text-align: center;
     line-height: 100px;
     padding: 4px;
-    border: solid black 4px;
+    border: solid #666 6px;
+    border-top: solid #999 4px;
+    border-right: solid #888 6px;
+    border-bottom: solid #555 4px;
     vertical-align: middle
 }
 

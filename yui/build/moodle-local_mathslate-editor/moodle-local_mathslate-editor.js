@@ -31,18 +31,27 @@ var CSS = {
  * @param string config
  */
 M.local_mathslate.Editor=function(editorID,config){
+    this.node=Y.one(editorID);
+    this.node.setHTML('<p>MathJax does not seem to be present on this site. In order to use this plugin MathJax needs to be configured. '
+        + 'MathJax is an opensource software library that is capable of displaying mathmatics '
+        + 'in any javascript enabled browser.  Mathslate uses it to render mathematics within the editor. '
+        + 'Therefore you should check with the system administrator of this site to see whether MathJax may be installed. '
+        + 'See <a href="http://mathjax.org" target="_blank">mathjax.org</a> for more instructions.</p>');
+    if(!MathJax){
+        return;
+    }
+    this.node.setHTML('');
     //Set MathJax to us HTML-CSS rendering on all browsers
     MathJax.Hub.setRenderer('HTML-CSS');
     var toolboxID=Y.guid();
     var workID=Y.guid();
-    this.node=Y.one(editorID);
     this.node.addClass('mathslate-editor');
     //Place math editor on page
     this.node.appendChild(Y.Node.create('<div id="' +toolboxID +'" class="'+CSS.TOOLBOX+'">'));
     this.node.appendChild(Y.Node.create('<div id="' +workID +'" >'));
 
     var mje=new M.local_mathslate.MathJaxEditor('#'+workID);
-    //Place buttons for internal editor functions along top of preview
+    //Place buttons for internal editor functions
     var undo=Y.Node.create('<button type="button" class="'
            +CSS.UNDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
            + M.util.image_url('undo', 'local_mathslate') + '" title="Undo"/></button>');

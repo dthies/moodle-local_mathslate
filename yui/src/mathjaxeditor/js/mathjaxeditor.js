@@ -32,7 +32,10 @@ M.local_mathslate.MathJaxEditor=function(id){
         se.slots.push(math);
         this.workspace=Y.one(id).append('<div id="canvas" class="'+CSS.WORKSPACE+'"/>');
         var preview = Y.one(id).appendChild(Y.Node.create('<div class="'+CSS.PREVIEW+'">'));
-
+        preview.delegate('click',function(e){
+            e.stopPropagation();
+            canvas.get('node').one('#'+this.getAttribute('id')).handleClick();
+        },'div');
         var canvas=new Y.DD.Drop({
             node: this.workspace.one('#canvas')});
         this.canvas=canvas;
@@ -44,13 +47,11 @@ M.local_mathslate.MathJaxEditor=function(id){
  * @function makeDraggable
  */
         function makeDraggable () {
-//alert(canvas.get('node').getHTML());
             preview.setHTML(se.preview('tex'));
             se.forEach(function(m){
                 var node=canvas.get('node').one('#'+m[1].id);
                 if(!node){return;}
-                node.on('click',function(e){
-                    e.stopPropagation();
+                node.handleClick = function() {
                     var selectedNode = canvas.get('node').one(SELECTORS.SELECTED);
                     if(!selectedNode){
                         node.addClass(CSS.SELECTED);
@@ -68,6 +69,10 @@ M.local_mathslate.MathJaxEditor=function(id){
                     if(node.one('#'+selectedNode.getAttribute('id'))){return;}
                     se.insertSnippet(selectedNode.getAttribute('id'), se.removeSnippet(node.getAttribute('id')));
                     render();
+                };
+                node.on('click',function(e) {
+                    e.stopPropagation();
+                    this.handleClick();
                 });
                 node.on('dblclick',function(e){
                     e.stopPropagation();
