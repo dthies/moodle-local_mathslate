@@ -22,5 +22,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Mathslate';
+$string['pluginname'] = 'Mathslate Common';
 $string['mathslate'] = 'Mathslate';
+$string['undo'] = 'Undo';
+$string['clear'] = 'Clear';
+$string['redo'] = 'Redo';
+$string['nomathjax'] = '<p>MathJax does not seem to be present on this site. In order to use this plugin MathJax needs to be configured. MathJax is an opensource software library that is capable of displaying mathmatics in any javascript enabled browser.  Mathslate uses it to render mathematics within the editor. Therefore you should check with the system administrator of this site to see whether MathJax may be installed. See <a href="http://mathjax.org" target="_blank">mathjax.org</a> for more instructions.</p>';
+

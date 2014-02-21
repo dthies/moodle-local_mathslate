@@ -18,6 +18,7 @@
 M.local_mathslate = M.local_mathslate|| {};
 var CSS = {
    TOOLBOX: 'mathslate-toolbox',
+   DRAGNODE: 'mathslate-toolbox-drag',
    UNDO: 'mathslate-undo-button',
    REDO: 'mathslate-redo-button',
    CLEAR: 'mathslate-clear-button',
@@ -30,11 +31,7 @@ var CSS = {
  */
 M.local_mathslate.Editor=function(editorID,config){
     this.node=Y.one(editorID);
-    this.node.setHTML('<p>MathJax does not seem to be present on this site. In order to use this plugin MathJax needs to be configured. '
-        + 'MathJax is an opensource software library that is capable of displaying mathmatics '
-        + 'in any javascript enabled browser.  Mathslate uses it to render mathematics within the editor. '
-        + 'Therefore you should check with the system administrator of this site to see whether MathJax may be installed. '
-        + 'See <a href="http://mathjax.org" target="_blank">mathjax.org</a> for more instructions.</p>');
+    this.node.setHTML(M.util.get_string('nomathjax','local_mathslate'));
     if(!MathJax){
         return;
     }
@@ -52,13 +49,13 @@ M.local_mathslate.Editor=function(editorID,config){
     //Place buttons for internal editor functions
     var undo=Y.Node.create('<button type="button" class="'
            +CSS.UNDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
-           + M.util.image_url('undo', 'local_mathslate') + '" title="Undo"/></button>');
+           + M.util.image_url('undo', 'local_mathslate') + '" title="'+M.util.get_string('undo','local_mathslate')+'"/></button>');
     var redo=Y.Node.create('<button type="button" class="'
            +CSS.REDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
-           + M.util.image_url('redo', 'local_mathslate') + '" title="Redo"/></button>');
+           + M.util.image_url('redo', 'local_mathslate') + '" title="'+M.util.get_string('redo','local_mathslate')+'"/></button>');
     var clear=Y.Node.create('<button type="button" class="'
            +CSS.CLEAR+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
-           + M.util.image_url('delete', 'local_mathslate') + '" title="Clear"/></button>');
+           + M.util.image_url('delete', 'local_mathslate') + '" title="'+M.util.get_string('clear','local_mathslate')+'"/></button>');
     var help=Y.Node.create('<button type="submit" class="'
            +CSS.HELP+'", formaction="https://github.com/dthies/moodle-local_mathslate/wiki/Using-Mathslate" formtarget="_blank">'
            + '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
@@ -143,14 +140,18 @@ M.local_mathslate.Editor=function(editorID,config){
   */
     function makeToolsDraggable(){
         tbox.tools.forEach(function(tool) {
-        Y.one('#'+tool.id).on('click',function(){
-            mje.addMath(tool.json);
-        });
-        var d=new Y.DD.Drag({node: '#'+tool.id});
-        d.set('data',tool.json);
-        d.on('drag:end', function() {
-            this.get('node').setStyle('top' , '0');
-            this.get('node').setStyle('left' , '0');
+            Y.one('#'+tool.id).on('click',function(){
+                mje.addMath(tool.json);
+            });
+            var d=new Y.DD.Drag({node: '#'+tool.id});
+            d.set('data',tool.json);
+            d.on('drag:start', function() {
+                this.get('dragNode').addClass(CSS.DRAGNODE);
+            });
+            d.on('drag:end', function() {
+                this.get('node').setStyle('top' , '0');
+                this.get('node').setStyle('left' , '0');
+                this.get('node').removeClass(CSS.DRAGNODE);
             });
         });
     }

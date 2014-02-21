@@ -13,7 +13,7 @@ YUI.add('moodle-local_mathslate-mathjaxeditor', function (Y, NAME) {
  * Text editor mathslate plugin.
  *
  * @package    local_mathslate
- * @copyright  2013 Daniel Thies  <dthies@ccal.edu>
+ * @copyright  2013-2014 Daniel Thies  <dthies@ccal.edu>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 M.local_mathslate = M.local_mathslate|| {};
@@ -21,10 +21,13 @@ var CSS = {
     SELECTED: 'mathslate-selected',
     WORKSPACE: 'mathslate-workspace',
     PREVIEW: 'mathslate-preview',
-    HIGHLIGHT: 'highlight'
+    HIGHLIGHT: 'mathslate-highlight',
+    DRAGNODE: 'mathslate-workspace-drag',
+    DRAGGEDNODE: 'mathslate-workspace-dragged'
 };
 var SELECTORS = {
-    SELECTED: '.' + CSS.SELECTED
+    SELECTED: '.' + CSS.SELECTED,
+    HIGHLIGHT: '.' + CSS.HIGHLIGHT
 };
        
 //Constructor for equation workspace
@@ -91,13 +94,17 @@ M.local_mathslate.MathJaxEditor=function(id){
                             se.select();
                             canvas.get('node').one(SELECTORS.SELECTED).removeClass(CSS.SELECTED);
                         }
+                        this.get('node').addClass(CSS.DRAGGEDNODE);
                         var id = Y.guid();
                         this.get('dragNode').set('innerHTML','' );
+                        this.get('dragNode').addClass(CSS.DRAGNODE);
                         MathJax.Hub.Queue(['addElement',MathJax.HTML,
                             this.get('dragNode').getDOMNode(),'span',{id: id},
                             [['math',{display: "block"},[Y.JSON.parse(se.getItemByID(m[1].id))]]]]);
                         MathJax.Hub.Queue(['Typeset',MathJax.Hub,id]);
-                    
+                    });
+                    drag.on('drag:end', function(){
+                        this.get('node').removeClass(CSS.DRAGGEDNODE);
                     });
                 }
 
@@ -115,13 +122,14 @@ M.local_mathslate.MathJaxEditor=function(id){
                 });
                 drop.on('drop:enter',function(e){
                     e.stopPropagation();
-                    canvas.get('node').all('.highlight').each(function(n){
-                         n.removeClass('highlight');
+                    canvas.get('node').all(SELECTORS.HIGHLIGHT).each(function(n){
+                         n.removeClass(CSS.HIGHLIGHT);
                     });
-                    this.get('node').addClass('highlight');
+                    this.get('node').addClass(CSS.HIGHLIGHT);
                 });
-                drop.on('drop:exit',function(){
-                    this.get('node').removeClass('highlight');
+                drop.on('drop:exit',function(e){
+                    e.stopPropagation();
+                    this.get('node').removeClass(CSS.HIGHLIGHT);
                 });
                 
             });

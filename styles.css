@@ -1,9 +1,17 @@
-.highlight {
+.mathslate-highlight {
     color: yellow
 }
 
 .mathslate-workspace .mathslate-selected {
     color: green
+}
+
+.mathslate-workspace-dragged {
+    color: #888;
+}
+
+.mathslate-toolbox-drag, .mathslate-workspace-drag {
+    color: #FFF;
 }
 
 .mathslate-preview {

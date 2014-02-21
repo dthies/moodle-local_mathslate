@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
 function local_mathslate_init($elementid) {
     global $PAGE, $OUTPUT, $CFG;
 
-    $PAGE->requires->strings_for_js(array( 'mathslate'),'local_mathslate');
+    $PAGE->requires->strings_for_js(array( 'mathslate','nomathjax'),'local_mathslate');
 
     $PAGE->requires->yui_module('moodle-local_mathslate-editor');
 
