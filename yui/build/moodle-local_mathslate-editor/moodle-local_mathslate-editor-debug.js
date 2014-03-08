@@ -19,6 +19,7 @@ YUI.add('moodle-local_mathslate-editor', function (Y, NAME) {
 
 M.local_mathslate = M.local_mathslate|| {};
 var CSS = {
+   EDITOR: 'mathslate-local',
    TOOLBOX: 'mathslate-toolbox',
    DRAGNODE: 'mathslate-toolbox-drag',
    UNDO: 'mathslate-undo-button',
@@ -42,38 +43,15 @@ M.local_mathslate.Editor=function(editorID,config){
     MathJax.Hub.setRenderer('HTML-CSS');
     var toolboxID=Y.guid();
     var workID=Y.guid();
-    this.node.addClass('mathslate-editor');
+    this.node.addClass(CSS.EDITOR);
     //Place math editor on page
     this.node.appendChild(Y.Node.create('<div id="' +toolboxID +'" class="'+CSS.TOOLBOX+'">'));
     this.node.appendChild(Y.Node.create('<div id="' +workID +'" >'));
 
     var mje=new M.local_mathslate.MathJaxEditor('#'+workID);
-    //Place buttons for internal editor functions
-    var undo=Y.Node.create('<button type="button" class="'
-           +CSS.UNDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
-           + M.util.image_url('undo', 'local_mathslate') + '" title="'+M.util.get_string('undo','local_mathslate')+'"/></button>');
-    var redo=Y.Node.create('<button type="button" class="'
-           +CSS.REDO+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
-           + M.util.image_url('redo', 'local_mathslate') + '" title="'+M.util.get_string('redo','local_mathslate')+'"/></button>');
-    var clear=Y.Node.create('<button type="button" class="'
-           +CSS.CLEAR+'">'+ '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
-           + M.util.image_url('delete', 'local_mathslate') + '" title="'+M.util.get_string('clear','local_mathslate')+'"/></button>');
-    var help=Y.Node.create('<button type="submit" class="'
-           +CSS.HELP+'", formaction="https://github.com/dthies/moodle-local_mathslate/wiki/Using-Mathslate" formtarget="_blank">'
-           + '<img class="iiicon" aria-hidden="true" role="presentation" width="16" height="16" src="'
-           + M.util.image_url('help', 'core') + '" title="Help"/></button>');
-    var toolbar=Y.Node.create('<form></form>');
-    mje.workspace.insert(toolbar,1);
-    toolbar.appendChild(clear);
-    toolbar.appendChild(undo);
-    toolbar.appendChild(redo);
-    toolbar.appendChild(help);
-
+ 
     var me=this;
     me.output = function(f){return mje.output(f);};
-    redo.on('click',function(){mje.redo();});
-    undo.on('click',function(){mje.undo();});
-    clear.on('click',function(){mje.clear();});
 
     var tbox={tools: [],
         fillToolBox: function(tools){
@@ -171,7 +149,6 @@ M.local_mathslate.Editor=function(editorID,config){
     } else {
         Y.io(config);
     }
-    
 };
 
 

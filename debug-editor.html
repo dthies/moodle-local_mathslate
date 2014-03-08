@@ -25,6 +25,9 @@ M.local_mathslate.config="http:./config.json";
 YUI().use('moodle-local_mathslate-editor','moodle-local_mathslate-textool', function (Y) {
 MathJax.Hub.Queue(['Typeset',MathJax.Hub]);
 var editor = new M.local_mathslate.Editor('#editor',"http:./config.json");
+var source=Y.Node.create('<button>Source</button>');
+source.on('click',function(){alert(Y.one('.mathslate-workspace').getHTML());});
+Y.one('body').appendChild(source);
 });
 </script>
 </body>
